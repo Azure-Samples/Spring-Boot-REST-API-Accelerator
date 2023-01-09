@@ -1,0 +1,19 @@
+#
+# These settings apply in all places that the application runs
+#
+spring:
+  application:
+    name: simple-api
+
+---
+
+#
+# This configuration ony actives when the app is running on Kubernetes.
+# Since Azure spring apps runs on K8s the settings below will only be
+# active when the app is running on Azure Spring Apps
+#
+spring:
+  config:
+    activate:
+      on-cloud-platform: kubernetes
+
