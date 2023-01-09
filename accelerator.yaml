@@ -38,5 +38,5 @@ engine:
         - type: ReplaceText
           condition: "#javaVersion == '17'"
           substitutions:
-            - text: "11"
-              with: "'17'"
+            - text: "'<java.version>11</java.version>'"
+              with: "'<java.version>17</java.version>'"
