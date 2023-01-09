@@ -19,6 +19,11 @@ accelerator:
           value: "11"
         - text: 17
           value: "17"
+    - name: keyVault
+      label: "Azure Key Vault"
+      display: false
+      dataType: boolean
+      defaultValue: false
 
 engine:
   merge:
