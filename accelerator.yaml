@@ -33,10 +33,10 @@ engine:
       chain:
         - type: ReplaceText
           substitutions:
-            - text: "Spring-Boot-REST-API-Accelerator"
+            - text: Spring-Boot-REST-API-Accelerator
               with: "#artifactId"
         - type: ReplaceText
           condition: "#javaVersion == '17'"
           substitutions:
-            - text: "'<java.version>11</java.version>'"
+            - text: <java.version>11</java.version>
               with: "'<java.version>17</java.version>'"
