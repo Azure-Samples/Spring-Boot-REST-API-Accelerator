@@ -40,3 +40,5 @@ engine:
           substitutions:
             - text: <java.version>11</java.version>
               with: "'<java.version>17</java.version>'"
+    - include: [ "azure/KeyVault/**"]
+      condition: "#keyVault == true"
