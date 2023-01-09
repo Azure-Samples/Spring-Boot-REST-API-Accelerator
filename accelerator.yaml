@@ -39,4 +39,4 @@ engine:
           condition: "#javaVersion == '17'"
           substitutions:
             - text: "11"
-              with: "17"
+              with: "'17'"
