@@ -1,0 +1,26 @@
+accelerator:
+  displayName: SpringBoot REST API
+  description: An example showing how to build a rest API using Spring Boot & Azure Spring Apps Enterprise.
+  iconUrl: https://raw.githubusercontent.com/sample-accelerators/icons/master/icon-cloud.png
+  tags:
+    - Java
+    - Spring
+    - API
+  options:
+    - name: javaVersion
+      label: "Which Java version do you want to use?"
+      inputType: select
+      dataType: string
+      display: true
+      required: true
+      defaultValue: "11"
+      choices:
+        - text: 11
+          value: "11"
+        - text: 17
+          value: "17"
+
+engine:
+  merge:
+    - include: [ "**/**" ]
+      exclude: [ "accelerator.yaml" ]
