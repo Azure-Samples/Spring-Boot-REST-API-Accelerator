@@ -35,8 +35,3 @@ engine:
           substitutions:
             - text: "Spring-Boot-REST-API-Accelerator"
               with: "#artifactId"
-        - type: ReplaceText
-          condition: "#javaVersion == '17'"
-          substitutions:
-            - text: 11
-              with: 17
