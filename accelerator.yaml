@@ -131,7 +131,7 @@ engine:
       chain:
         - type: ReplaceText
           substitutions:
-            - text: #ADD-KEY-VAULT-SETTINGS
+            - text: "#ADD-KEY-VAULT-SETTINGS"
               with: "#files.contentsOf('snippets/vault.yaml')"
 
     #
