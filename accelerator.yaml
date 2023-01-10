@@ -68,6 +68,10 @@ engine:
     - include: [ "**/**" ]
       exclude: [  "accelerator.yaml", "accelerator.md", "azure/**", "**/*.java" ]
 
+    #
+    # Refactor the package name of the generated java code to
+    # package name entered by the user
+    #
     - include: ["**/*.java"]
       chain:
         - type: OpenRewriteRecipe
@@ -77,6 +81,9 @@ engine:
             newPackageName: "#packageName"
     #
     # transform the pom.xml based on the input values
+    #  - set the artifact id
+    #  - set the java version
+    #  - configure maven dependencies
     #
     - include: [ "pom.xml" ]
       chain:
@@ -91,6 +98,7 @@ engine:
               with: "'<java.version>17</java.version>'"
         - type: OpenRewriteRecipe
           recipe: org.openrewrite.maven.RemoveDependency
+          condition: "#keyVault == false"
           options:
             groupId: "'com.azure.spring'"
             artifactId: "'spring-cloud-azure-starter-keyvault'"
