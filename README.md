@@ -7,21 +7,21 @@ simplifies the life developers.
 
 # Local Development
 
-For local development you will need Java REPLACE-JAVA-VERSION and
-your favourite IDE. Just import the project into your IDE and
-you will be able to launch it.
+For local development you will need Java and your favourite IDE. 
+Just import the project into your IDE and you will be able to launch it.
 
 # Deploying to Azure Spring Apps
 
 ## Prerequisites
 
-### Azure cli spring extension
 In order to deploy the application to Azure Spring Apps (ASA) service
 you will need the azure cli installed, along with the azure
 spring apps extension. If the extension is not installed
 you can install it with the command `az extension add --name spring`
 
-REPLACE-WITH-KEY-VAULT-DOCS
+Setup of any dependant azure resources can be found in the
+`/azure` folder. If the folder does not exist then you don't 
+need it.
 
 ## Set environment variables
 All `az spring` commands require two common parameters. The name of
