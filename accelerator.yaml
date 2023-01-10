@@ -1,3 +1,8 @@
+#
+# This section defines the settings that affect how the User interface
+# presented to users see docs at
+# https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-application-accelerator-creating-accelerators-accelerator-yaml.html#accelerator-0
+#
 accelerator:
   displayName: SpringBoot REST API
   description: An example showing how to build a rest API using Spring Boot & Azure Spring Apps Enterprise.
@@ -8,22 +13,34 @@ accelerator:
     - API
   options:
     - name: javaVersion
-      label: "Which Java version do you want to use?"
-      inputType: select
       dataType: string
-      display: true
       required: true
       defaultValue: "11"
+      label: Which Java version do you want to use?
+      description: Java version used by the generated project
+      inputType: select
       choices:
         - text: 11
           value: "11"
-        - text: 17
+        - text: 17 (Recommend)
           value: "17"
     - name: keyVault
-      label: "Azure Key Vault"
-      display: false
       dataType: boolean
       defaultValue: false
+      label: "Azure Key Vault"
+      description: "Configures project to use Azure Key Vault and produces ARM template to create a vault"
+
+
+
+#
+# The engine section describes how to take the files from the accelerator root directory and transform them
+#  into the contents of a generated project zip file.
+#
+# Overview docs at
+# https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-application-accelerator-creating-accelerators-accelerator-yaml.html#engine-4
+#
+# Transform docs at
+#
 
 engine:
   merge:
