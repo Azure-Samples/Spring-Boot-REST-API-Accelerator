@@ -29,6 +29,16 @@ accelerator:
           value: "17"
 
     #
+    # UI options to get the package name for the generated java code
+    #
+    - name: packageName
+      dataType: string
+      required: true
+      defaultValue: "com.acme"
+      label: Package name
+      description: Name of the package to put generated code under
+
+    #
     # UI options to select if an Azure Key Vault is required
     #
     - name: keyVault
@@ -64,7 +74,7 @@ engine:
           recipe: org.openrewrite.java.ChangePackage
           options:
             oldPackageName: "'com.example'"
-            newPackageName: "'org.test'"
+            newPackageName: "#packageName"
     #
     # transform the pom.xml based on the input values
     #
