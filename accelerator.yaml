@@ -50,7 +50,7 @@ accelerator:
       dataType: string
       required: true
       label: "Vault Name"
-      description: "Key Vault names must be globally unique. 3-24 chars long. Alphanumerics and hyphens (dash). Start with a letter. End with a letter or digit. Can not contain consecutive hyphens. "
+      description: "3-24 chars long. Alphanumerics and hyphens (dash). Start with a letter. End with a letter or digit. Can not contain consecutive hyphens. Key Vault names must be globally unique."
       dependsOn:
         name: keyVault
         value: true
@@ -58,10 +58,11 @@ accelerator:
       dataType: string
       required: true
       label: "Resource Group"
-      description: "Between 1 and 90 characters long. Alphanumerics, underscores, parentheses, hyphens, periods. Can't end with period. Resource Group names must be unique within a subscription."
+      description: "1-90 characters long. Alphanumerics, underscores, parentheses, hyphens, periods. Can't end with period. Resource Group names must be unique within a subscription."
       dependsOn:
         name: keyVault
         value: true
+
 #
 # The engine section describes how to take the files from the accelerator root directory and transform them
 #  into the contents of a generated project zip file.
@@ -124,3 +125,13 @@ engine:
     - include: [ "azure/KeyVault/**"]
       condition: "#keyVault == true"
 
+    #
+    # set the vault name the one selected by the user
+    #
+    - include: [ "azure/KeyVault/parameters.json" ]
+      condition: "#keyVault == true"
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text: REPLACE-WITH-VAULT-NAME
+              with: "#keyVaultName"
