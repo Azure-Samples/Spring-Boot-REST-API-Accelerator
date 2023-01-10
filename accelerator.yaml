@@ -73,7 +73,7 @@ engine:
             - text: <java.version>11</java.version>
               with: "'<java.version>17</java.version>'"
         - type: ReplaceText
-          condition: "#keyVault == true"
+          condition: "#keyVault == false"
           substitutions:
             - text: |
                   <dependency>
