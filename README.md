@@ -40,7 +40,7 @@ export ASA_SERVICE_NAME=demo-asa
 export ASA_APP_NAME=quotes-demo
 ```
 
-## Lst the currently deployed apps
+## List the currently deployed apps
 
 Run the command below to see what apps are currently deployed
 to the ASA instance.
@@ -97,3 +97,4 @@ az spring app delete \
   --service ${ASA_SERVICE_NAME} \
   --name ${ASA_APP_NAME} 
 ```
+

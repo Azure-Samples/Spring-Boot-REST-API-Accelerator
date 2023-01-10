@@ -1,0 +1,8 @@
+  cloud:
+    azure:
+      keyvault:
+        secret:
+          property-sources:
+            - endpoint: https://#keyVaultName.vault.azure.net/
+          credential:
+            managed-identity-enabled: false

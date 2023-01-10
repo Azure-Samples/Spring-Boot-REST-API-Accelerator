@@ -16,4 +16,4 @@ spring:
   config:
     activate:
       on-cloud-platform: kubernetes
-
+#ADD-KEY-VAULT-SETTINGS

@@ -82,7 +82,7 @@ engine:
     # files that are needed if certain conditions are true
     #
     - include: [ "**/**" ]
-      exclude: [  "accelerator.yaml", "accelerator.md", "azure/**", "**/*.java" ]
+      exclude: [  "accelerator.yaml", "accelerator.md", "azure/**", "**/*.java", "snippets/**" ]
 
     #
     # Refactor the package name of the generated java code to
@@ -126,6 +126,13 @@ engine:
           substitutions:
             - text:  Spring-Boot-REST-API-Accelerator
               with: "#artifactId"
+
+    - include: [ "src/main/resources/application.yaml" ]
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text: #ADD-KEY-VAULT-SETTINGS
+              with: "#files.contentsOf('snippets/vault.yaml')"
 
     #
     # include key vault ARM template and scripts if the user wants it
