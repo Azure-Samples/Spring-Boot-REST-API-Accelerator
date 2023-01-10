@@ -58,6 +58,12 @@ engine:
     - include: [ "**/**" ]
       exclude: [  "accelerator.yaml", "accelerator.md", "azure/**" ]
 
+    - include: [ "**/*.java" ]
+      chain:
+        - type: OpenRewriteRecipe
+          options:
+            oldPackageName: "'com.example'"
+            newPackageName: "'org.test'"
     #
     # transform the pom.xml based on the input values
     #
@@ -79,10 +85,3 @@ engine:
     - include: [ "azure/KeyVault/**"]
       condition: "#keyVault == true"
 
-  chain:
-    - include: [ "**/*.java" ]
-    - type: OpenRewriteRecipe
-      recipe: org.openrewrite.java.ChangePackage
-      options:
-        oldPackageName: "'com.example'"
-        newPackageName: "'org.test'"
