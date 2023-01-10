@@ -56,7 +56,7 @@ engine:
     # files that are needed if certain conditions are true
     #
     - include: [ "**/**" ]
-      exclude: [  "accelerator.yaml", "accelerator.md", "azure/**" ]
+      exclude: [  "accelerator.yaml", "accelerator.md", "azure/**", "**/*.java" ]
 
     - include: ["**/*.java"]
       chain:
