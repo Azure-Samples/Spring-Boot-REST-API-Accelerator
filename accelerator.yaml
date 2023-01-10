@@ -103,13 +103,7 @@ engine:
             groupId: "'com.azure.spring'"
             artifactId: "'spring-cloud-azure-starter-keyvault'"
             scope: "'compile'"
-#        - type: OpenRewriteRecipe
-#          recipe: org.openrewrite.maven.RemoveManagedDependency
-#          condition: "#keyVault == false"
-#          options:
-#            groupId: "'com.azure.spring'"
-#            artifactId: "'spring-cloud-azure-dependencies'"
-#            scope: "'import'"
+
     #
     # include key vault ARM template and scripts if the user wants it
     #
