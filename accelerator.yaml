@@ -58,9 +58,10 @@ engine:
     - include: [ "**/**" ]
       exclude: [  "accelerator.yaml", "accelerator.md", "azure/**" ]
 
-    - include: [ "**/*.java" ]
+    - include: [ "pom.xml" ]
       chain:
         - type: OpenRewriteRecipe
+          recipe: org.openrewrite.java.ChangePackage
           options:
             oldPackageName: "'com.example'"
             newPackageName: "'org.test'"
