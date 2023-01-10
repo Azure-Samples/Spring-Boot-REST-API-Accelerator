@@ -46,8 +46,14 @@ accelerator:
       defaultValue: false
       label: "Azure Key Vault"
       description: "Configures project to use Azure Key Vault and produces ARM template to create a vault"
-
-
+    - name: keyVaultName
+      dataType: string
+      required: true
+      label: "Vault Name"
+      description: "Key Vault names must be globally unique. 3-24 chars long. Alphanumerics and hyphens (dash). Start with a letter. End with a letter or digit. Can not contain consecutive hyphens. "
+      dependsOn:
+        name: keyVault
+        value: true
 #
 # The engine section describes how to take the files from the accelerator root directory and transform them
 #  into the contents of a generated project zip file.
