@@ -85,4 +85,4 @@ engine:
       recipe: org.openrewrite.java.ChangePackage
       options:
         oldPackageName: "'com.example'"
-        newPackageName: "org.test"
+        newPackageName: "'org.test'"
