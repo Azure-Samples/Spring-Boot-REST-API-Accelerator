@@ -72,6 +72,15 @@ engine:
           substitutions:
             - text: <java.version>11</java.version>
               with: "'<java.version>17</java.version>'"
+        - type: ReplaceText
+          condition: "#keyVault == true"
+          substitutions:
+            - text: |
+                  <dependency>
+                    <groupId>com.azure.spring</groupId>
+                    <artifactId>spring-cloud-azure-starter-keyvault</artifactId>
+                  </dependency>
+              with: "''"
 
     #
     # include key vault ARM template and scripts if the user wants it
