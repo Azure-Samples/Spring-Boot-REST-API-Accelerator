@@ -49,9 +49,14 @@ accelerator:
 #
 
 engine:
-  type: Include
-  patterns: [ '**/*.java' ]
-
+  type: Chain
+  transformations:
+    - type: Include
+      patterns: [ '**/pom.xml' ]
+    - type: ReplaceText
+      substitutions:
+        - text: hello-fun
+          with: "#artifactId"
 #  merge:
 #
 #    #
