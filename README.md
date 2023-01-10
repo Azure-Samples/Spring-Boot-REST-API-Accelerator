@@ -1,57 +1,19 @@
-# Project Name
+= Spring-Boot-REST-API-Accelerator
 
-(short, 1-3 sentenced, description of the project)
+An simple application accelerator for Azure Spring Apps Enterprise tier service.
+This is is designed to teach you the concepts of what an accelerator and
+highlight how accelerator simplifies the life developers.
 
-## Features
+== Features
 
-This project framework provides the following features:
+This accelerator generate Spring Boot REST API project that is
+targeted to run on Azure Spring Apps Service.
 
-* Feature 1
-* Feature 2
-* ...
+* choose the version of Java 11 or 17
+* choose integration with Azure Key Vault
 
-## Getting Started
+== Getting Started
 
-### Prerequisites
-
-(ideally very short, if any)
-
-- OS
-- Library version
-- ...
-
-### Installation
-
-(ideally very short)
-
-- npm install [package name]
-- mvn install
-- ...
-
-### Quickstart
-(Add steps to get up and running quickly)
-
-1. git clone [repository clone url]
-2. cd [repository name]
-3. ...
-
-
-## Demo
-
-A demo app is included to show how to use the project.
-
-To run the demo, follow these steps:
-
-(Add steps to start up the demo)
-
-1.
-2.
-3.
-
-## Resources
-
-(Any additional resources or related projects)
-
-- Link to supporting information
-- Link to similar sample
-- ...
+1. Register the accelerator with Azure spring apps by following the instructions in [accelerator.md](accelerator.md)
+2. Visit the accelerator URL in the Azure Spring Apps Instance where the accelerator was register
+3. Select the accelerator, generate a project and follow the instructions in the generated project's readme.md
