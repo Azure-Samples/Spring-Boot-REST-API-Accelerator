@@ -82,9 +82,9 @@ engine:
         - type: OpenRewriteRecipe
           recipe: org.openrewrite.maven.RemoveDependency
           options:
-            groupId: com.azure.spring
-            artifactId: spring-cloud-azure-starter-keyvault
-            scope: compile
+            groupId: "com.azure.spring"
+            artifactId: "spring-cloud-azure-starter-keyvault"
+            scope: "compile"
 
     #
     # include key vault ARM template and scripts if the user wants it
