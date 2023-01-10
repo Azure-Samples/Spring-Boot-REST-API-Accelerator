@@ -54,6 +54,14 @@ accelerator:
       dependsOn:
         name: keyVault
         value: true
+    - name: keyVaultResourceGroup
+      dataType: string
+      required: true
+      label: "Resource Group"
+      description: "Between 1 and 90 characters long. Alphanumerics, underscores, parentheses, hyphens, periods. Can't end with period. Resource Group names must be unique within a subscription."
+      dependsOn:
+        name: keyVault
+        value: true
 #
 # The engine section describes how to take the files from the accelerator root directory and transform them
 #  into the contents of a generated project zip file.
