@@ -128,11 +128,16 @@ engine:
               with: "#artifactId"
 
     - include: [ "src/main/resources/application.yaml" ]
+      condition: "#keyVault == true"
       chain:
         - type: ReplaceText
           substitutions:
             - text: "#ADD-KEY-VAULT-SETTINGS"
               with: "#files.contentsOf('snippets/vault.yaml')"
+        - type: ReplaceText
+          substitutions:
+            - text: vaultname
+              with: "#keyVaultName"
 
     #
     # include key vault ARM template and scripts if the user wants it

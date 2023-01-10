@@ -3,6 +3,6 @@
       keyvault:
         secret:
           property-sources:
-            - endpoint: https://#keyVaultName.vault.azure.net/
+            - endpoint: https://vaultname.vault.azure.net/
           credential:
             managed-identity-enabled: false
