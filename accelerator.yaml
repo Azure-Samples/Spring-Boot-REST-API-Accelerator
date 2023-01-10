@@ -119,6 +119,13 @@ engine:
             artifactId: "'spring-cloud-azure-starter-keyvault'"
             scope: "'compile'"
 
+    - include: [ "README.md" ]
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text:  Spring-Boot-REST-API-Accelerator
+              with: "#artifactId"
+
     #
     # include key vault ARM template and scripts if the user wants it
     #
@@ -135,3 +142,5 @@ engine:
           substitutions:
             - text: REPLACE-WITH-VAULT-NAME
               with: "#keyVaultName"
+
+
