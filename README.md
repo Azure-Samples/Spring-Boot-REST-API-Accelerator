@@ -1,8 +1,8 @@
 # Spring-Boot-REST-API-Accelerator
 
 An simple application accelerator for Azure Spring Apps Enterprise tier service.
-This is is designed to teach you the concepts of what an accelerator and
-highlight how accelerator simplifies the life developers.
+This is designed to teach you the concepts of an application accelerator and
+highlight how accelerators simplifies the life developers.
 
 ## Features
 
