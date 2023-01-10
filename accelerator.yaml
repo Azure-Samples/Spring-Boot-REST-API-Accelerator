@@ -79,6 +79,12 @@ engine:
           substitutions:
             - text: <java.version>11</java.version>
               with: "'<java.version>17</java.version>'"
+        - type: OpenRewriteRecipe
+          recipe: org.openrewrite.maven.RemoveDependency
+          options:
+            groupId: com.azure.spring
+            artifactId: spring-cloud-azure-starter-keyvault
+            scope: compile
 
     #
     # include key vault ARM template and scripts if the user wants it
