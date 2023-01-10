@@ -49,40 +49,32 @@ accelerator:
 #
 
 engine:
-  type: Chain
-  transformations:
-    - type: Include
-      patterns: [ '**/pom.xml' ]
-    - type: ReplaceText
-      substitutions:
-        - text: hello-fun
-          with: "#artifactId"
-#  merge:
-#
-#    #
-#    # include all files except the ones that for sure we don't need and
-#    # files that are only needed if certain conditions are true
-#    #
-#    - include: [ "**/**" ]
-#      exclude: [  "accelerator.yaml", "accelerator.md", "azure/**" ]
-#
-#    #
-#    # transform the pom.xml based on the input values
-#    #
-#    - include: [ "pom.xml" ]
-#      chain:
-#        - type: ReplaceText
-#          substitutions:
-#            - text: Spring-Boot-REST-API-Accelerator
-#              with: "#artifactId"
-#        - type: ReplaceText
-#          condition: "#javaVersion == '17'"
-#          substitutions:
-#            - text: <java.version>11</java.version>
-#              with: "'<java.version>17</java.version>'"
-#
-#    #
-#    # include key vault ARM template and scripts if the user wants it
-#    #
-#    - include: [ "azure/KeyVault/**"]
-#      condition: "#keyVault == true"
+  merge:
+
+    #
+    # include all files except the ones that for sure we don't need and
+    # files that are needed if certain conditions are true
+    #
+    - include: [ "**/**" ]
+      exclude: [  "accelerator.yaml", "accelerator.md", "azure/**" ]
+
+    #
+    # transform the pom.xml based on the input values
+    #
+    - include: [ "pom.xml" ]
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text: Spring-Boot-REST-API-Accelerator
+              with: "#artifactId"
+        - type: ReplaceText
+          condition: "#javaVersion == '17'"
+          substitutions:
+            - text: <java.version>11</java.version>
+              with: "'<java.version>17</java.version>'"
+
+    #
+    # include key vault ARM template and scripts if the user wants it
+    #
+    - include: [ "azure/KeyVault/**"]
+      condition: "#keyVault == true"
