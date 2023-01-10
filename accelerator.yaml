@@ -12,6 +12,9 @@ accelerator:
     - Spring
     - API
   options:
+    #
+    # UI options to set the java version for the project
+    #
     - name: javaVersion
       dataType: string
       required: true
@@ -24,12 +27,16 @@ accelerator:
           value: "11"
         - text: 17 (Recommend)
           value: "17"
+
+    #
+    # UI options to select if an Azure Key Vault is required
+    #
     - name: keyVault
       dataType: boolean
       defaultValue: false
       label: "Azure Key Vault"
       description: "Configures project to use Azure Key Vault and produces ARM template to create a vault"
-
+      inputType: toggle
 
 
 #
