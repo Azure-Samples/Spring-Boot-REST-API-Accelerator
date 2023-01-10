@@ -76,10 +76,10 @@ engine:
           condition: "#keyVault == false"
           substitutions:
             - text: |
-                  <dependency>
-                    <groupId>com.azure.spring</groupId>
-                    <artifactId>spring-cloud-azure-starter-keyvault</artifactId>
-                  </dependency>
+                         <dependency>
+                           <groupId>com.azure.spring</groupId>
+                           <artifactId>spring-cloud-azure-starter-keyvault</artifactId>
+                         </dependency>
               with: "''"
 
     #
