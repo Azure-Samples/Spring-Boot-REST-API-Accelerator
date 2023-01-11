@@ -107,11 +107,11 @@ engine:
           substitutions:
             - text: Spring-Boot-REST-API-Accelerator
               with: "#artifactId"
-#        - type: ReplaceText
-#          condition: "#javaVersion == '17'"
-#          substitutions:
-#            - text: <java.version>11</java.version>
-#              with: "'<java.version>17</java.version>'"
+        - type: ReplaceText
+          condition: "#javaVersion == '17'"
+          substitutions:
+            - text: <java.version>11</java.version>
+              with: "'<java.version>17</java.version>'"
         - type: OpenRewriteRecipe
           recipe: org.openrewrite.maven.RemoveDependency
           condition: "#keyVault == false"
@@ -119,12 +119,7 @@ engine:
             groupId: "'com.azure.spring'"
             artifactId: "'spring-cloud-azure-starter-keyvault'"
             scope: "'compile'"
-        - type: OpenRewriteRecipe
-          recipe: org.openrewrite.maven.ChangePropertyValue
-          condition: "#javaVersion == '17'"
-          options:
-            key: 'java.version'
-            newValue: '17'
+
 
 
     - include: [ "README.md" ]
