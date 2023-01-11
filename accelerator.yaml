@@ -54,7 +54,7 @@ accelerator:
     - name: postgresDB
       dataType: boolean
       defaultValue: false
-      label: "Postgres DB"
+      label: "Azure PostgreSQL Flexible Server"
       description: "Generate ARM template for a PostgreSQL - Flexible Server"
 
     #
@@ -67,7 +67,7 @@ accelerator:
       label: "Database server name"
       description: "3-63 chars long. Alphanumerics and hyphens (dash). Can't start or end with hyphen. Names must be globally unique across Azure."
       dependsOn:
-        name: keyVault
+        name: postgresDB
         value: true
 
 #    - name: keyVaultResourceGroup
