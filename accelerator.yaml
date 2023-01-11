@@ -129,11 +129,11 @@ engine:
               with: "'<java.version>17</java.version>'"
         - type: OpenRewriteRecipe
           recipe: org.openrewrite.maven.RemoveDependency
-          condition: "#keyVault == false"
+          condition: "#postgresDB == false"
           options:
-            groupId: "'com.azure.spring'"
-            artifactId: "'spring-cloud-azure-starter-keyvault'"
-            scope: "'compile'"
+            groupId: "'com.h2database'"
+            artifactId: "'h2'"
+            scope: "'test'"
 
 
 
