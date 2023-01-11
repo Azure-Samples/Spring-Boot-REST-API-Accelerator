@@ -91,8 +91,15 @@ accelerator:
 
 engine:
   chain:
-    - include: [ "**/**" ]
-      exclude: [ "accelerator.yaml", "accelerator.md"]
+    - merge: # Sage A: Get rid of files we don't need
+      - include: [ "**/**" ]
+        exclude: [ "accelerator.yaml", "accelerator.md"]
+      - condition: "#postgresDB == false"
+        include: [ "snippets/*.java" ]
+        chain:
+          - type: RewritePath
+            regex: stateless/(.*)
+            rewriteTo: "'src/main/java/com/example/' + #g1"
     - merge:
         #
         # include all files except the ones that for sure we don't need and
