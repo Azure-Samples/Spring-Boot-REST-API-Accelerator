@@ -1,25 +1,28 @@
-#
-# These settings apply in all places that the application runs
-#
+#@ load("@ytt:data", "data")
+
+#!
+#! These settings apply in all places that the application runs
+#!
 spring:
   application:
     name: simple-api
+#@ if data.values.postgresDB:
   datasource:
     url: "jdbc:postgresql://127.0.0.1:15432/quotes"
     username: postgres
     password: password
   jpa:
     open-in-view: false
-
+#@ end
 ---
 
-#
-# This configuration ony actives when the app is running on Kubernetes.
-# Since Azure spring apps runs on K8s the settings below will only be
-# active when the app is running on Azure Spring Apps
-#
+#!
+#! This configuration ony actives when the app is running on Kubernetes.
+#! Since Azure spring apps runs on K8s the settings below will only be
+#! active when the app is running on Azure Spring Apps
+#!
 spring:
   config:
     activate:
       on-cloud-platform: kubernetes
-#ADD-KEY-VAULT-SETTINGS
+
