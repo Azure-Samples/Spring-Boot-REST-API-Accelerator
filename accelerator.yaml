@@ -86,7 +86,7 @@ engine:
     # resource names that must be unique
     #
     - name: randomSuffix
-      expression: 'UUID.randomUUID().toString().substring(0,6)'
+      expression: 'java.util.UUID.randomUUID().toString().substring(0,6)'
 
   chain:
     - merge:
