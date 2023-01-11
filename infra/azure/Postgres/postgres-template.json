@@ -68,7 +68,7 @@
       },
       "resources" : [
         {
-          "type": "Microsoft.DBforPostgreSQL/flexibleServers/databases",
+          "type": "databases",
           "apiVersion": "2022-12-01",
           "name": "[parameters('databaseName')]",
           "dependsOn": [

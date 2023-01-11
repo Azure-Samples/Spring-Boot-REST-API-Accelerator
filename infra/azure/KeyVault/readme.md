@@ -14,7 +14,7 @@ you want to put the
 ```bash
 az deployment group create \
   --template-file key-vault-template.json \
-  --parameters -p parameters.json \
+  --parameters parameters.json \
   --resource-group ${VAULT_RESOURCE_GROUP}
 ```
 

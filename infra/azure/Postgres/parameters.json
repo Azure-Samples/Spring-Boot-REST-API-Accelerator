@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "serverName": {
-      "value": "asaikali-postgres"
+      "value": "asaikali-postgres16"
     },
     "administratorLogin": {
       "value": "pgadmin"
@@ -11,8 +11,8 @@
     "haMode": {
       "value": "Disabled"
     },
-    "vaultName": {
-      "value": "REPLACE-WITH-VAULT-NAME"
+    "databaseName": {
+      "value": "quotes"
     }
   }
 }
