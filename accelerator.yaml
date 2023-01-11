@@ -103,7 +103,7 @@ engine:
     # Refactor the package name of the generated java code to
     # package name entered by the user
     #
-    - include: ["**/*.java"]
+    - include: ["src/**/*.java"]
       chain:
         - type: OpenRewriteRecipe
           recipe: org.openrewrite.java.ChangePackage
