@@ -97,7 +97,7 @@ engine:
         # files that are needed if certain conditions are true
         #
         - include: [ "**/**" ]
-          exclude: [ "azure/**", "**/*.java", "snippets/**", "ytt/**" ]
+          exclude: [ "azure/**", "**/*.java", "ytt/**" ]
 
         #
         # Refactor the package name of the generated java code to
@@ -153,33 +153,5 @@ engine:
                 - text: Spring-Boot-REST-API-Accelerator
                   with: "#artifactId"
 
-      #    - include: [ "src/main/resources/application.yaml" ]
-      #      condition: "#keyVault == true"
-      #      chain:
-      #        - type: ReplaceText
-      #          substitutions:
-      #            - text: "#ADD-KEY-VAULT-SETTINGS"
-      #              with: "#files.contentsOf('snippets/vault.yaml')"
-      #        - type: ReplaceText
-      #          substitutions:
-      #            - text: vaultname
-      #              with: "#keyVaultName"
-
-      #
-      # include key vault ARM template and scripts if the user wants it
-      #
-      #    - include: [ "azure/KeyVault/**"]
-      #      condition: "#keyVault == true"
-
-      #
-      # set the vault name the one selected by the user
-      #
-  #    - include: [ "azure/KeyVault/parameters.json" ]
-  #      condition: "#keyVault == true"
-  #      chain:
-  #        - type: ReplaceText
-  #          substitutions:
-  #            - text: REPLACE-WITH-VAULT-NAME
-  #              with: "#keyVaultName"
 
 
