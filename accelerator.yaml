@@ -119,6 +119,14 @@ engine:
             groupId: "'com.azure.spring'"
             artifactId: "'spring-cloud-azure-starter-keyvault'"
             scope: "'compile'"
+        - type: OpenRewriteRecipe
+          recipe: org.openrewrite.maven.ChangePropertyValue
+          condition: "#javaVersion == '17'"
+          options:
+            key: java.version
+            newValue: 17
+            addIfMissing: true
+            trustParent: false
 
     - include: [ "README.md" ]
       chain:
