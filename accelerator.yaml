@@ -115,7 +115,6 @@ engine:
         # Generate the spring boot application.yaml using
         #
         - include: [ "src/main/resources/application.yaml", "ytt/add-vault.yaml" ]
-          condition: "#postgresDB == false"
           chain:
             - type: YTT
 
