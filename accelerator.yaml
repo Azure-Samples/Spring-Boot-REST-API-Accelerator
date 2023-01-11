@@ -90,101 +90,109 @@ accelerator:
 #
 
 engine:
-  merge:
-
-    #
-    # include all files except the ones that for sure we don't need and
-    # files that are needed if certain conditions are true
-    #
+  chain:
     - include: [ "**/**" ]
-      exclude: [  "accelerator.yaml", "accelerator.md", "azure/**", "**/*.java", "snippets/**" ]
+      exclude: [ "accelerator.yaml", "accelerator.md"]
+    - merge:
+        #
+        # include all files except the ones that for sure we don't need and
+        # files that are needed if certain conditions are true
+        #
+        - include: [ "**/**" ]
+          exclude: [ "azure/**", "**/*.java", "snippets/**" ]
 
-    #
-    # Refactor the package name of the generated java code to
-    # package name entered by the user
-    #
-    - include: ["src/**/*.java"]
-      chain:
-        - type: OpenRewriteRecipe
-          recipe: org.openrewrite.java.ChangePackage
-          options:
-            oldPackageName: "'com.example'"
-            newPackageName: "#packageName"
-    #
-    # transform the pom.xml based on the input values
-    #  - set the artifact id
-    #  - set the java version
-    #  - configure maven dependencies
-    #
-    - include: [ "pom.xml" ]
-      chain:
-        - type: ReplaceText
-          substitutions:
-            - text: Spring-Boot-REST-API-Accelerator
-              with: "#artifactId"
-        - type: ReplaceText
-          condition: "#javaVersion == '17'"
-          substitutions:
-            - text: <java.version>11</java.version>
-              with: "'<java.version>17</java.version>'"
-        - type: OpenRewriteRecipe
-          recipe: org.openrewrite.maven.RemoveDependency
-          condition: "#postgresDB == false"
-          options:
-            groupId: "'com.h2database'"
-            artifactId: "'h2'"
-            scope: "'test'"
-        - type: OpenRewriteRecipe
-          recipe: org.openrewrite.maven.RemoveDependency
-          condition: "#postgresDB == false"
-          options:
-            groupId: "'org.postgresql'"
-            artifactId: "'postgresql'"
-            scope: "'runtime'"
-        - type: OpenRewriteRecipe
-          recipe: org.openrewrite.maven.RemoveDependency
-          condition: "#postgresDB == false"
-          options:
-            groupId: "'org.springframework.boot'"
-            artifactId: "'spring-boot-starter-data-jpa'"
-            scope: "'compile'"
+        #
+        # Refactor the package name of the generated java code to
+        # package name entered by the user
+        #
+        - include: [ "**/*.java" ]
+          chain:
+            - condition: "#postgresDB == false"
+              include: [ "snippets/*.java" ]
+              chain:
+                - type: RewritePath
+                  regex: stateless/(.*)
+                  rewriteTo: "'src/main/java/com/example/' + #g1"
+            - type: OpenRewriteRecipe
+              recipe: org.openrewrite.java.ChangePackage
+              options:
+                oldPackageName: "'com.example'"
+                newPackageName: "#packageName"
+        #
+        # transform the pom.xml based on the input values
+        #  - set the artifact id
+        #  - set the java version
+        #  - configure maven dependencies
+        #
+        - include: [ "pom.xml" ]
+          chain:
+            - type: ReplaceText
+              substitutions:
+                - text: Spring-Boot-REST-API-Accelerator
+                  with: "#artifactId"
+            - type: ReplaceText
+              condition: "#javaVersion == '17'"
+              substitutions:
+                - text: <java.version>11</java.version>
+                  with: "'<java.version>17</java.version>'"
+            - type: OpenRewriteRecipe
+              recipe: org.openrewrite.maven.RemoveDependency
+              condition: "#postgresDB == false"
+              options:
+                groupId: "'com.h2database'"
+                artifactId: "'h2'"
+                scope: "'test'"
+            - type: OpenRewriteRecipe
+              recipe: org.openrewrite.maven.RemoveDependency
+              condition: "#postgresDB == false"
+              options:
+                groupId: "'org.postgresql'"
+                artifactId: "'postgresql'"
+                scope: "'runtime'"
+            - type: OpenRewriteRecipe
+              recipe: org.openrewrite.maven.RemoveDependency
+              condition: "#postgresDB == false"
+              options:
+                groupId: "'org.springframework.boot'"
+                artifactId: "'spring-boot-starter-data-jpa'"
+                scope: "'compile'"
 
 
 
-    - include: [ "README.md" ]
-      chain:
-        - type: ReplaceText
-          substitutions:
-            - text:  Spring-Boot-REST-API-Accelerator
-              with: "#artifactId"
+        - include: [ "README.md" ]
+          chain:
+            - type: ReplaceText
+              substitutions:
+                - text: Spring-Boot-REST-API-Accelerator
+                  with: "#artifactId"
 
-#    - include: [ "src/main/resources/application.yaml" ]
-#      condition: "#keyVault == true"
-#      chain:
-#        - type: ReplaceText
-#          substitutions:
-#            - text: "#ADD-KEY-VAULT-SETTINGS"
-#              with: "#files.contentsOf('snippets/vault.yaml')"
-#        - type: ReplaceText
-#          substitutions:
-#            - text: vaultname
-#              with: "#keyVaultName"
+      #    - include: [ "src/main/resources/application.yaml" ]
+      #      condition: "#keyVault == true"
+      #      chain:
+      #        - type: ReplaceText
+      #          substitutions:
+      #            - text: "#ADD-KEY-VAULT-SETTINGS"
+      #              with: "#files.contentsOf('snippets/vault.yaml')"
+      #        - type: ReplaceText
+      #          substitutions:
+      #            - text: vaultname
+      #              with: "#keyVaultName"
 
-    #
-    # include key vault ARM template and scripts if the user wants it
-    #
-#    - include: [ "azure/KeyVault/**"]
-#      condition: "#keyVault == true"
+      #
+      # include key vault ARM template and scripts if the user wants it
+      #
+      #    - include: [ "azure/KeyVault/**"]
+      #      condition: "#keyVault == true"
 
-    #
-    # set the vault name the one selected by the user
-    #
-#    - include: [ "azure/KeyVault/parameters.json" ]
-#      condition: "#keyVault == true"
-#      chain:
-#        - type: ReplaceText
-#          substitutions:
-#            - text: REPLACE-WITH-VAULT-NAME
-#              with: "#keyVaultName"
+      #
+      # set the vault name the one selected by the user
+      #
+  #    - include: [ "azure/KeyVault/parameters.json" ]
+  #      condition: "#keyVault == true"
+  #      chain:
+  #        - type: ReplaceText
+  #          substitutions:
+  #            - text: REPLACE-WITH-VAULT-NAME
+  #              with: "#keyVaultName"
 
 
