@@ -110,6 +110,15 @@ engine:
               options:
                 oldPackageName: "'com.example'"
                 newPackageName: "#packageName"
+
+        #
+        # Generate the spring boot application.yaml using
+        #
+        - include: [ "src/main/resources/application.yaml", "ytt/remove-datasource.yaml" ]
+          chain:
+            - type: YTT
+
+
         #
         # transform the pom.xml based on the input values
         #  - set the artifact id

@@ -1,0 +1,22 @@
+#@ load("@ytt:overlay", "overlay")
+#@ load("@ytt:data", "data")
+
+#@ def k8s_only():
+spring:
+  config:
+    activate:
+      on-cloud-platform: kubernetes
+#@ end
+
+#@overlay/match by=overlay.subset(k8s_only()), expects="1+"
+---
+spring:
+  #@overlay/match missing_ok=True
+  cloud:
+    azure:
+      keyvault:
+        secret:
+          property-sources:
+            - endpoint:  #@ "https://" +  data.values.vaultName + ".vault.azure.net/"
+          credential:
+            managed-identity-enabled: false
