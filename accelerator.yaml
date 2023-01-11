@@ -70,15 +70,6 @@ accelerator:
         name: postgresDB
         value: true
 
-#    - name: keyVaultResourceGroup
-#      dataType: string
-#      required: true
-#      label: "Resource Group"
-#      description: "1-90 characters long. Alphanumerics, underscores, parentheses, hyphens, periods. Can't end with period. Resource Group names must be unique within a subscription."
-#      dependsOn:
-#        name: keyVault
-#        value: true
-
 #
 # The engine section describes how to take the files from the accelerator root directory and transform them
 #  into the contents of a generated project zip file.
@@ -86,22 +77,28 @@ accelerator:
 # Overview docs at
 # https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-application-accelerator-creating-accelerators-accelerator-yaml.html#engine-4
 #
-# Transform docs at
 #
 
 engine:
+  let:
+    #
+    # Make a random 6 character suffix that we can add to generated azure
+    # resource names that must be unique
+    #
+    - name: randomSuffix
+      expression: 'UUID.randomUUID().toString().substring(0,6)'
+
   chain:
     - merge:
         #
-        # include all files except the ones that for sure we don't need and
-        # files that are needed if certain conditions are true
+        # include all files except the ones that we might not need
         #
         - include: [ "**/**" ]
-          exclude: [ "azure/**", "**/*.java", "ytt/**" ]
+          exclude: [ "infra/**", "**/*.java", "ytt/**", "accelerator.md" ]
 
         #
         # Refactor the package name of the generated java code to
-        # package name entered by the user
+        # package name entered by the user using OpenRewrite Engine
         #
         - include: [ "**/*.java" ]
           chain:
@@ -143,6 +140,22 @@ engine:
                 artifactId: "'postgresql'"
                 scope: "'runtime'"
 
+        #
+        # Configure KeyVault ARM template
+        #
+        - include: [ "infra/azure/KeyVault/**" ]
+          exclude: [ "infra/azure/KeyVault/parameters.json" ]
+        - include: [ "infra/azure/KeyVault/parameters.json" ]
+          chain:
+            - type: ReplaceText
+              substitutions:
+                - text: REPLACE-WITH-VAULT-NAME
+                  with: "#keyVaultName"
+
+          #
+        # transform the readme to provide custom instructions based on
+        # what the user's choices.
+        #
         - include: [ "README.md" ]
           chain:
             - type: ReplaceText
