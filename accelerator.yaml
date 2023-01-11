@@ -112,12 +112,11 @@ engine:
                 newPackageName: "#packageName"
 
         #
-        # Generate the spring boot application.yaml using
+        # Generate the spring boot application.yaml using carvel YTT tool
         #
         - include: [ "src/main/resources/application.yaml", "ytt/add-vault.yaml" ]
           chain:
             - type: YTT
-
 
         #
         # transform the pom.xml based on the input values
@@ -143,7 +142,6 @@ engine:
                 groupId: "'org.postgresql'"
                 artifactId: "'postgresql'"
                 scope: "'runtime'"
-
 
         - include: [ "README.md" ]
           chain:
