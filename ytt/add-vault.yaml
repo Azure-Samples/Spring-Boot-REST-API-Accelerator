@@ -17,6 +17,6 @@ spring:
       keyvault:
         secret:
           property-sources:
-            - endpoint:  #@ "https://" +  data.values.vaultName + ".vault.azure.net/"
+            - endpoint:  #@ "https://" +  data.values.keyVaultName + ".vault.azure.net/"
           credential:
             managed-identity-enabled: false
