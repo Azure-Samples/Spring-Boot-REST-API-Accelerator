@@ -11,9 +11,9 @@ class QuoteServiceImpl implements QuoteService {
         this.quoteRepository = quoteRepository;
     }
 
-    public Quote randomQuote() {
+    public QuoteJson randomQuote() {
         QuoteEntity randomQuote = this.quoteRepository.findRandomQuote();
-        var result = new Quote();
+        var result = new QuoteJson();
         result.setQuote(randomQuote.getQuote());
         result.setId(randomQuote.getId());
         result.setAuthor(randomQuote.getAuthor());

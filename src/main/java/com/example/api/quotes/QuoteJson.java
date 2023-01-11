@@ -1,6 +1,6 @@
 package com.example.api.quotes;
 
-class Quote {
+class QuoteJson {
     private Integer id;
     private String quote;
     private String author;

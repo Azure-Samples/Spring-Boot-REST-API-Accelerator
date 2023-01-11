@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "quotes")
-public class QuoteEntity
+class QuoteEntity
 {
     @Id
     @Column(name = "id")

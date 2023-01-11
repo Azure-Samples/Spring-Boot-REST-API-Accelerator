@@ -15,9 +15,9 @@ class QuoteController {
     }
 
     @GetMapping(value = "/",produces = MediaType.APPLICATION_JSON_VALUE)
-    public Quote randomQuote()
+    public QuoteJson randomQuote()
     {
-        Quote result = quoteService.randomQuote();
+        QuoteJson result = quoteService.randomQuote();
         return result;
     }
 }
