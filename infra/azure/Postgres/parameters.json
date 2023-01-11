@@ -10,6 +10,9 @@
     },
     "haMode": {
       "value": "Disabled"
+    },
+    "vaultName": {
+      "value": "REPLACE-WITH-VAULT-NAME"
     }
   }
 }

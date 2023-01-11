@@ -152,6 +152,25 @@ engine:
                 - text: REPLACE-WITH-VAULT-NAME
                   with: "#keyVaultName"
 
+        #
+        # configure local development with Postgres
+        # using docker compase
+        #
+        - include: [ "infra/local/db/**" ]
+          condition: "#postgresDB == true"
+
+        #
+        # configure ARM template for Postgres development on Azure
+        #
+        - include: ["infra/azure/Postgres/**"]
+          exclude: [ "infra/azure/Postgres/parameters.json"]
+        - include: [ "infra/azure/Postgres/parameters.json" ]
+          chain:
+            - type: ReplaceText
+              substitutions:
+                - text: REPLACE-WITH-VAULT-NAME
+                  with: "#keyVaultName"
+
           #
         # transform the readme to provide custom instructions based on
         # what the user's choices.
