@@ -13,7 +13,7 @@ accelerator:
     - API
   options:
     #
-    # UI options to set the java version for the project
+    # UI option to set the java version for the project
     #
     - name: javaVersion
       dataType: string
@@ -29,7 +29,7 @@ accelerator:
           value: "17"
 
     #
-    # UI options to get the package name for the generated java code
+    # UI option to get the package name for the generated java code
     #
     - name: packageName
       dataType: string
@@ -39,22 +39,37 @@ accelerator:
       description: Name of the package to put generated code under
 
     #
-    # UI options to select if an Azure Key Vault is required
+    # UI option to get the key vault name to create with the project
     #
-    - name: keyVault
-      dataType: boolean
-      defaultValue: false
-      label: "Azure Key Vault"
-      description: "Configures project to use Azure Key Vault and produces ARM template to create a vault"
     - name: keyVaultName
       dataType: string
       required: true
       defaultValue: "myvault"
       label: "Vault Name"
       description: "3-24 chars long. Alphanumerics and hyphens (dash). Start with a letter. End with a letter or digit. Can not contain consecutive hyphens. Key Vault names must be globally unique."
+
+    #
+    # UI option to select if a Postgres Database is required
+    #
+    - name: postgresDB
+      dataType: boolean
+      defaultValue: false
+      label: "Postgres DB"
+      description: "Generate ARM template for a PostgreSQL - Flexible Server"
+
+    #
+    # UI options to set the name of the postgres database
+    #
+    - name: postgresServerName
+      dataType: string
+      required: true
+      defaultValue: "mypostgres"
+      label: "Database server name"
+      description: "3-63 chars long. Alphanumerics and hyphens (dash). Can't start or end with hyphen. Names must be globally unique across Azure."
       dependsOn:
         name: keyVault
         value: true
+
 #    - name: keyVaultResourceGroup
 #      dataType: string
 #      required: true
