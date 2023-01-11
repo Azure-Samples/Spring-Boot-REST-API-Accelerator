@@ -134,6 +134,13 @@ engine:
             groupId: "'com.h2database'"
             artifactId: "'h2'"
             scope: "'test'"
+        - type: OpenRewriteRecipe
+          recipe: org.openrewrite.maven.RemoveDependency
+          condition: "#postgresDB == false"
+          options:
+            groupId: "'org.postgresql'"
+            artifactId: "'postgresql'"
+            scope: "'runtime'"
 
 
 
