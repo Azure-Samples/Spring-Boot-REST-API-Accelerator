@@ -1,18 +1,9 @@
 package com.example.api.quotes;
 
-public class Quote {
+class Quote {
     private Integer id;
     private String quote;
     private String author;
-    private boolean k8s = false;
-
-    public boolean isK8s() {
-        return k8s;
-    }
-
-    public void setK8s(boolean k8s) {
-        this.k8s = k8s;
-    }
 
     public Integer getId() {
         return id;

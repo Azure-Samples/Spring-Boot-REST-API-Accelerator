@@ -1,0 +1,47 @@
+#
+# Docker compose file that launches a Postgres server and PgAdmin client
+# so that it is easy to access the database. Both are run as docker containers
+# on non-standard Postgres ports to avoid conflict with local Postgres installation
+#   - localhost:15432 for postgres
+#   - localhost:15433 for pgAdmin
+#
+# for details on how this works see https://github.com/asaikali/docker-compose-postgres
+#
+version: '3.7'
+
+volumes:
+    postgres:
+    pgadmin:
+
+services:
+  postgres:
+    image: "postgres:14"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+      PGDATA: "/data/postgres"
+    volumes:
+       - postgres:/data/postgres
+       - ./docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+    ports:
+      - "15432:5432"
+    restart: unless-stopped
+  
+  pgadmin:
+    image: "dpage/pgadmin4:6.18"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@example.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    volumes:
+       - pgadmin:/var/lib/pgadmin
+       - ./docker_pgadmin_servers.json:/pgadmin4/servers.json
+    ports:
+      - "15433:80"
+    entrypoint:
+      - "/bin/sh"
+      - "-c"
+      - "/bin/echo 'postgres:5432:*:postgres:password' > /tmp/pgpassfile && chmod 600 /tmp/pgpassfile && /entrypoint.sh"
+    restart: unless-stopped
+    
