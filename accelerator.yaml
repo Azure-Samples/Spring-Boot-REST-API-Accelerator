@@ -85,8 +85,8 @@ engine:
     # Make a random 6 character suffix that we can add to generated azure
     # resource names that must be unique
     #
-    - name: randomSuffix
-      expression: 'java.util.UUID.randomUUID().toString().substring(0,6)'
+#    - name: randomSuffix
+#      expression: 'java.util.UUID.randomUUID().toString().substring(0,6)'
 
   chain:
     - merge:
