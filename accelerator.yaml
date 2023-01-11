@@ -107,11 +107,11 @@ engine:
           substitutions:
             - text: Spring-Boot-REST-API-Accelerator
               with: "#artifactId"
-        - type: ReplaceText
-          condition: "#javaVersion == '17'"
-          substitutions:
-            - text: <java.version>11</java.version>
-              with: "'<java.version>17</java.version>'"
+#        - type: ReplaceText
+#          condition: "#javaVersion == '17'"
+#          substitutions:
+#            - text: <java.version>11</java.version>
+#              with: "'<java.version>17</java.version>'"
         - type: OpenRewriteRecipe
           recipe: org.openrewrite.maven.RemoveDependency
           condition: "#keyVault == false"
