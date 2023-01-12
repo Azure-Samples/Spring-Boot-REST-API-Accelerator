@@ -98,7 +98,7 @@ az spring app deploy \
   --resource-group ${ASA_SERVICE_RG} \
   --service ${ASA_SERVICE_NAME} \
   --name ${ASA_APP_NAME} \
-  --artifact-path ./target/Spring-Boot-REST-API-Accelerator-0.0.1-SNAPSHOT.jar \
+  --artifact-path ./target/PROJECT-TITLE-SNAPSHOT.jar \
   --output table
 ```
 
