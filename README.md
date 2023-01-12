@@ -17,7 +17,7 @@ Asks the user to choose:
 
 The rest of this ready explains how to register this accelerators 
 with the Azure Spring Apps service. The readme file seen by the user
-when they generate a project is located in "app-readme.md" Below are
+when they generate a project is located in ["app-readme.md"](app-readme.md) Below are
 azure cli commands to manage accelerators with Azure Spring Apps.
 
 ## Enable Application Accelerator
