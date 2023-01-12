@@ -178,6 +178,10 @@ engine:
         - type: RewritePath
           regex: app-readme(.*)
           rewriteTo: "'README' + #g1"
+        - type: ReplaceText
+          substitutions:
+            - text: PROJECT-TITLE
+              with: "#artifactId"
 
 
 

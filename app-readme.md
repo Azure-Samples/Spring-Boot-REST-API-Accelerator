@@ -1,4 +1,4 @@
-# Spring-Boot-REST-API-Accelerator
+# PROJECT-TITLE
 
 An application accelerator that generates Spring Boot based API for the
 Azure Spring Apps Enterprise tier service. This is designed to teach you 
