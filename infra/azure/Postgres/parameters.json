@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "serverName": {
-      "value": "asaikali-postgres16"
+      "value": "SERVER-NAME"
     },
     "administratorLogin": {
       "value": "pgadmin"
@@ -12,7 +12,7 @@
       "value": "Disabled"
     },
     "databaseName": {
-      "value": "quotes"
+      "value": "app"
     }
   }
 }

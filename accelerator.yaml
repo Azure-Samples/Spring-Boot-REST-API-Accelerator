@@ -171,8 +171,8 @@ engine:
           chain:
             - type: ReplaceText
               substitutions:
-                - text: REPLACE-WITH-VAULT-NAME
-                  with: "#keyVaultName"
+                - text: SERVER-NAME
+                  with: "#postgresServerName"
 
           #
         # transform the readme to provide custom instructions based on
