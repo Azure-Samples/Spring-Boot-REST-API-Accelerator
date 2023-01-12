@@ -176,7 +176,7 @@ engine:
     - include: [ "app-readme.md" ]
       chain:
         - type: RewritePath
-          regex: accelerator(.*)
+          regex: app-readme(.*)
           rewriteTo: "'README' + #g1"
 
 
