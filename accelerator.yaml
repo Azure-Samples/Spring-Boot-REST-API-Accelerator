@@ -1,0 +1,213 @@
+#
+# This section defines the settings that affect how the User interface
+# presented to users see docs at
+# https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-application-accelerator-creating-accelerators-accelerator-yaml.html#accelerator-0
+#
+accelerator:
+  displayName: SpringBoot REST API
+  description: An example showing how to build a rest API using Spring Boot & Azure Spring Apps Enterprise.
+  iconUrl: https://raw.githubusercontent.com/sample-accelerators/icons/master/icon-cloud.png
+  tags:
+    - Java
+    - Spring
+    - API
+  options:
+    #
+    # UI option to set the java version for the project
+    #
+    - name: javaVersion
+      dataType: string
+      required: true
+      defaultValue: "11"
+      label: Which Java version do you want to use?
+      description: Java version used by the generated project
+      inputType: select
+      choices:
+        - text: 11
+          value: "11"
+        - text: 17 (Recommend)
+          value: "17"
+
+    #
+    # UI option to get the package name for the generated java code
+    #
+    - name: packageName
+      dataType: string
+      required: true
+      defaultValue: "com.acme"
+      label: Package name
+      description: Name of the package to put generated code under
+
+    #
+    # UI option to get the key vault name to create with the project
+    #
+    - name: keyVaultName
+      dataType: string
+      required: true
+      defaultValue: "myvault"
+      label: "Vault Name"
+      description: "3-24 chars long. Alphanumerics and hyphens (dash). Start with a letter. End with a letter or digit. Can not contain consecutive hyphens. Key Vault names must be globally unique."
+
+    #
+    # UI option to select if a Postgres Database is required
+    #
+    - name: postgresDB
+      dataType: boolean
+      defaultValue: false
+      label: "Azure PostgreSQL Flexible Server"
+      description: "Generate ARM template for a PostgreSQL - Flexible Server"
+
+    #
+    # UI options to set the name of the postgres database
+    #
+    - name: postgresServerName
+      dataType: string
+      required: true
+      defaultValue: "mypostgres"
+      label: "Database server name"
+      description: "3-63 chars long. Alphanumerics and hyphens (dash). Can't start or end with hyphen. Names must be globally unique across Azure."
+      dependsOn:
+        name: postgresDB
+        value: true
+
+#
+# The engine section describes how to take the files from the accelerator root directory and transform them
+#  into the contents of a generated project zip file.
+#
+# Overview docs at
+# https://docs.vmware.com/en/VMware-Tanzu-Application-Platform/1.3/tap/GUID-application-accelerator-creating-accelerators-accelerator-yaml.html#engine-4
+#
+#
+
+engine:
+  merge:
+    #
+    # include all files except the ones that we might not need
+    #
+    - include: [ "**/**" ]
+      exclude: [ "infra/**", "**/*.java", "ytt/**", "app-readme.md", "settings-template.sh", "snippets/**" ]
+
+    #
+    # Refactor the package name of the generated java code to
+    # package name entered by the user using OpenRewrite Engine
+    #
+    - include: [ "**/*.java" ]
+      chain:
+        - type: OpenRewriteRecipe
+          recipe: org.openrewrite.java.ChangePackage
+          options:
+            oldPackageName: "'com.example'"
+            newPackageName: "#packageName"
+
+    #
+    # Generate the spring boot application.yaml using carvel YTT tool
+    #
+    - include: [ "src/main/resources/application.yaml", "ytt/add-vault.yaml" ]
+      chain:
+        - type: YTT
+
+    #
+    # transform the pom.xml based on the input values
+    #  - set the artifact id
+    #  - set the java version
+    #  - configure maven dependencies
+    #
+    - include: [ "pom.xml" ]
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text: Spring-Boot-REST-API-Accelerator
+              with: "#artifactId"
+        - type: ReplaceText
+          condition: "#javaVersion == '17'"
+          substitutions:
+            - text: <java.version>11</java.version>
+              with: "'<java.version>17</java.version>'"
+        - type: OpenRewriteRecipe
+          recipe: org.openrewrite.maven.RemoveDependency
+          condition: "#postgresDB == false"
+          options:
+            groupId: "'org.postgresql'"
+            artifactId: "'postgresql'"
+            scope: "'runtime'"
+        - type: OpenRewriteRecipe
+          recipe: org.openrewrite.maven.ChangeDependencyScope
+          condition: "#postgresDB == false"
+          options:
+            groupId: "'com.h2database'"
+            artifactId: "'h2'"
+            newScope: "'runtime'"
+
+    #
+    # Configure KeyVault ARM template
+    #
+    - include: [ "infra/azure/KeyVault/**" ]
+      exclude: [ "infra/azure/KeyVault/parameters.json" ]
+    - include: [ "infra/azure/KeyVault/parameters.json" ]
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text: REPLACE-WITH-VAULT-NAME
+              with: "#keyVaultName"
+
+    #
+    # configure local development with Postgres
+    # using docker compose
+    #
+    - include: [ "infra/local/**" ]
+      condition: "#postgresDB == true"
+
+    #
+    # configure ARM template for Postgres development on Azure
+    #
+    - include: ["infra/azure/Postgres/**"]
+      exclude: [ "infra/azure/Postgres/parameters.json"]
+      condition: "#postgresDB == true"
+
+    - include: [ "infra/azure/Postgres/parameters.json" ]
+      condition: "#postgresDB == true"
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text: SERVER-NAME
+              with: "#postgresServerName"
+        - type: ReplaceText
+          substitutions:
+            - text: VAULT-NAME
+              with: "#keyVaultName"
+
+    #
+    # transform the readme to provide custom instructions on
+    # how to use the generated project based on user choices.
+    #
+    - include: [ "app-readme.md", "snippets/**" ]
+      chain:
+        - type: RewritePath
+          regex: snippets/app-readme(.*)
+          rewriteTo: "'README' + #g1"
+        - type: ReplaceText
+          substitutions:
+            - text: PROJECT-TITLE
+              with: "#artifactId"
+            - text: JAVA-VERSION
+              with: "#javaVersion"
+            - text: REPLACE-WITH-APP-NAME
+              with: "#artifactId"
+            - text: REPLACE-WITH-VAULT-NAME
+              with: "#keyVaultName"
+        - type: ReplaceText
+          condition: "#postgresDB == true"
+          substitutions:
+            - text: LOCAL-DB-USAGE
+              with: "#files.contentsOf('snippets/local-db.md')"
+            - text: AZURE-DB-USAGE
+              with: "#files.contentsOf('snippets/azure-db.md')"
+        - type: ReplaceText
+          condition: "#postgresDB == false"
+          substitutions:
+            - text: LOCAL-DB-USAGE
+              with:  "''"
+            - text: AZURE-DB-USAGE
+              with: "''"
+
+

@@ -1,0 +1,38 @@
+#@ load("@ytt:overlay", "overlay")
+#@ load("@ytt:data", "data")
+
+#@ def k8s_only():
+spring:
+  config:
+    activate:
+      on-cloud-platform: kubernetes
+#@ end
+
+#@overlay/match by=overlay.subset(k8s_only()), expects="1+"
+---
+spring:
+  #@overlay/match missing_ok=True
+  cloud:
+    azure:
+      keyvault:
+        secret:
+          property-sources:
+            - endpoint:  #@ "https://" +  data.values.keyVaultName + ".vault.azure.net/"
+          credential:
+            managed-identity-enabled: true
+
+#@overlay/match by=overlay.subset(k8s_only()), expects="1+"
+---
+spring:
+#@ if data.values.postgresDB:
+  #@overlay/match missing_ok=True
+  datasource:
+    url: #@ "jdbc:postgresql://" + data.values.postgresServerName + ".postgres.database.azure.com/app?sslmode=require"
+    username: pgadmin
+    password: #@ "${" + data.values.postgresServerName + "}"
+  #@overlay/match missing_ok=True
+  jpa:
+    open-in-view: false
+#@ end
+
+#! jdbc:postgresql://asaikali12.postgres.database.azure.com:5432/{your_database}?user=pgadmin&password={your_password}&sslmode=require
