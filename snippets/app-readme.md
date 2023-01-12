@@ -105,6 +105,17 @@ az spring app deploy \
   --output table
 ```
 
+## Stream the log files of the application
+
+Run the command below to stream the app logs 
+```bash
+az spring app logs \
+  --resource-group ${ASA_SERVICE_RG} \
+  --service ${ASA_SERVICE_NAME} \
+  --follow \
+  --name ${ASA_APP_NAME} 
+```
+
 ## Delete the application
 
 You can delete the application with the command below
