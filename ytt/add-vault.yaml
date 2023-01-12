@@ -27,11 +27,12 @@ spring:
 #@ if data.values.postgresDB:
   #@overlay/match missing_ok=True
   datasource:
-    url: "jdbc:postgresql://127.0.0.1:15432/quotes"
-    username: postgres
-    password: password
+    url: #@ "jdbc:postgresql://" + data.values.postgresServerName + ".postgres.database.azure.com/quotes?sslmode=require"
+    username: pgadmin
+    password: #@ "${" + data.values.postgresServerName + "}"
   #@overlay/match missing_ok=True
   jpa:
     open-in-view: false
 #@ end
 
+#! jdbc:postgresql://asaikali12.postgres.database.azure.com:5432/{your_database}?user=pgadmin&password={your_password}&sslmode=require
