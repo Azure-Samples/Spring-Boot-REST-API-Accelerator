@@ -1,118 +1,80 @@
-# Spring-Boot-REST-API-Accelerator
+# Developing the accelerator
 
-An application accelerator that generates Spring Boot based API for the
-Azure Spring Apps Enterprise tier service. This is designed to teach you 
-the concepts of an application accelerator and highlight how accelerators 
-simplifies the life developers.
+An simple application accelerator for Azure Spring Apps Enterprise Tier.
+This is designed to teach you the concepts of an application accelerator and
+highlight how accelerators simplifies the life developers.
 
-# Local Development
+## Features
 
-For local development you will need Java and your favourite IDE. 
-Just import the project into your IDE and you will be able to launch it.
+Asks the user to choose: 
 
-If you are application is using a Postgres there is a folder 
-`infra/local` which contains a docker file to launch a local 
-postgres server for development. 
+* version of Java 11 or 17
+* package name to use the generated code 
+* Name of an Azure Key Vault to use to store secrets used by the API
+* Name of postgres DB to create if the user asks for a database
 
-<!--IsThisReal-->
-# Deploying to Azure Spring Apps
+# Getting Started
 
-## Prerequisites
+The rest of this ready explains how to register this accelerators 
+with the Azure Spring Apps service. The readme file seen by the user
+when they generate a project is located in "app-readme.md" Below are
+azure cli commands to manage accelerators with Azure Spring Apps.
 
-In order to deploy the application to Azure Spring Apps (ASA) service
-you will need the azure cli installed, along with the azure
-spring apps extension. If the extension is not installed
-you can install it with the command `az extension add --name spring`
-
-
-*Create the Key Vault*
-1. cd into the folder `infra/azure/KeyVault/`
-2. Run the `create-key-vault.sh` passing it the name resource group to create the Azure Key Vault in.
-
-*Create Postgres DB (Optional)*
-
-If you are using Postgres as database you can use the steps below to 
-configure the database 
-
-1. cd into the folder `infra/azure/Postgres`
-2. Run the `create-postgres-server.sh` passing it the name of the resource group to create the Postgres database in.
-3. You will be asked to select a password to use to access the database
-
-Once the database is done creating, it is time to add the database
-password to 
-
-## Set environment variables
-All `az spring` commands require two common parameters. The name of
-the ASA service and the name of the resource group that the ASA
-service has been created in. You can set the resource group name
-by passing it via the `--resource-group` option and the service
-name with the `--service` option. If the `--resource-group` and
-`--service` are not specified then the default settings of the
-azure cli are used. In order to avoid conflicts with your local
-azure cli setup run the command below to export two environment
-variables that the rest of the commands in this document will use.
+## Enable Application Accelerator
+The first step is to enable the application accelerator capability
+in Azure Spring Apps Enterprise Tier. You can use the command below
+replace the `ASA_SERVICE_RG` and `ASA_SERVICE_NAME` environment
+variables with the values for the resource group and service name
+where Azure Spring Apps is running.
 
 ```bash
-export ASA_SERVICE_RG=demo 
-export ASA_SERVICE_NAME=demo-asa 
-export ASA_APP_NAME=quotes-demo
+ASA_SERVICE_RG=demo && \
+ASA_SERVICE_NAME=demo-asa && \
+az spring application-accelerator create \
+  --resource-group ${ASA_SERVICE_RG} \
+  --service ${ASA_SERVICE_NAME}
 ```
 
-## List the currently deployed apps
+## Register the accelerator
+The second step is to register the accelerator with Azure Spring Apps
+using the command below.You will need to make modifications to match
+where the Azure Spring Apps instance is deploy, along with the specific
+details of accelerator such as name, git repo it is located in, and
+display name.
+```bash
+ASA_SERVICE_RG=demo && \
+ASA_SERVICE_NAME=demo-asa && \
+az spring application-accelerator customized-accelerator create \
+  --resource-group ${ASA_SERVICE_RG} \
+  --service ${ASA_SERVICE_NAME} \
+  --name spring-boot-rest-api \
+  --display-name "Spring Boot REST API" \
+  --git-branch main \
+  --git-interval 10 \
+  --git-url https://github.com/asaikali/Spring-Boot-REST-API-Accelerator 
+```
 
-Run the command below to see what apps are currently deployed
-to the ASA instance.
+## List Deployed Accelerators
+
+The command displays a table with all the metadata details of an accelerator.
 
 ```bash
-az spring app list \
+ASA_SERVICE_RG=demo && \
+ASA_SERVICE_NAME=demo-asa && \
+az spring application-accelerator customized-accelerator list \
   --resource-group ${ASA_SERVICE_RG} \
   --service ${ASA_SERVICE_NAME} \
   --output table
 ```
 
-## Create the application in Azure Spring Apps
-
-Before we can deploy the application code we need to tell Azure Spring Apps
-to create the app so that we can start deploying code. You can create the app
-with the command below.
+## Unregister an accelerator
 
 ```bash
-az spring app create \
+ASA_SERVICE_RG=demo && \
+ASA_SERVICE_NAME=demo-asa && \
+az spring application-accelerator customized-accelerator delete \
   --resource-group ${ASA_SERVICE_RG} \
   --service ${ASA_SERVICE_NAME} \
-  --assign-endpoint true \
-  --system-assigned true \
-  --cpu 1000m \
-  --memory 1Gi \
-  --name ${ASA_APP_NAME} 
-```
-
-## Deploy the application code
-
-Azure spring apps can deploy application code from source or from a complied
-`.jar`. Lets deploy the app as a `.jar` file. Compile the app suing the
-typical maven command
-
-```bash
-./mvnw clean package
-```
-Run the command below to deploy the app.
-```bash
-az spring app deploy \
-  --resource-group ${ASA_SERVICE_RG} \
-  --service ${ASA_SERVICE_NAME} \
-  --name ${ASA_APP_NAME} \
-  --artifact-path ./target/Spring-Boot-REST-API-Accelerator-0.0.1-SNAPSHOT.jar
-```
-
-## Delete the application
-
-You can delete the application with the command below
-
-```bash
-az spring app delete \
-  --resource-group ${ASA_SERVICE_RG} \
-  --service ${ASA_SERVICE_NAME} \
-  --name ${ASA_APP_NAME} 
+  --name sample-api-accelerator  
 ```
 
