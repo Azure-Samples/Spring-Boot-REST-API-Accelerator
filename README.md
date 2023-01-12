@@ -1,6 +1,6 @@
 # Spring-Boot-REST-API-Accelerator
 
-An simple application accelerator creating Spring Boot based API for the
+An application accelerator that generates Spring Boot based API for the
 Azure Spring Apps Enterprise tier service. This is designed to teach you 
 the concepts of an application accelerator and highlight how accelerators 
 simplifies the life developers.
@@ -14,6 +14,7 @@ If you are application is using a Postgres there is a folder
 `infra/local` which contains a docker file to launch a local 
 postgres server for development. 
 
+<!--IsThisReal-->
 # Deploying to Azure Spring Apps
 
 ## Prerequisites

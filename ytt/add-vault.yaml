@@ -27,7 +27,7 @@ spring:
 #@ if data.values.postgresDB:
   #@overlay/match missing_ok=True
   datasource:
-    url: #@ "jdbc:postgresql://" + data.values.postgresServerName + ".postgres.database.azure.com/quotes?sslmode=require"
+    url: #@ "jdbc:postgresql://" + data.values.postgresServerName + ".postgres.database.azure.com/app?sslmode=require"
     username: pgadmin
     password: #@ "${" + data.values.postgresServerName + "}"
   #@overlay/match missing_ok=True
