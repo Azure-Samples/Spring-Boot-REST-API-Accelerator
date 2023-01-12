@@ -85,7 +85,7 @@ engine:
     # include all files except the ones that we might not need
     #
     - include: [ "**/**" ]
-      exclude: [ "infra/**", "**/*.java", "ytt/**", "app-readme.md", "settings-template.sh" ]
+      exclude: [ "infra/**", "**/*.java", "ytt/**", "app-readme.md", "settings-template.sh", "/snippets/**" ]
 
     #
     # Refactor the package name of the generated java code to
