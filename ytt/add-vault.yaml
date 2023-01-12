@@ -20,3 +20,18 @@ spring:
             - endpoint:  #@ "https://" +  data.values.keyVaultName + ".vault.azure.net/"
           credential:
             managed-identity-enabled: true
+
+#@overlay/match by=overlay.subset(k8s_only()), expects="1+"
+---
+spring:
+#@ if data.values.postgresDB:
+  #@overlay/match missing_ok=True
+  datasource:
+    url: "jdbc:postgresql://127.0.0.1:15432/quotes"
+    username: postgres
+    password: password
+  #@overlay/match missing_ok=True
+  jpa:
+    open-in-view: false
+#@ end
+
