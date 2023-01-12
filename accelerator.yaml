@@ -186,6 +186,8 @@ engine:
               with: "#javaVersion"
             - text: REPLACE-WITH-APP-NAME
               with: "#artifactId"
+            - text: REPLACE-WITH-VAULT-NAME
+              with: "#keyVaultName"
         - type: ReplaceText
           condition: "#postgresDB == true"
           substitutions:

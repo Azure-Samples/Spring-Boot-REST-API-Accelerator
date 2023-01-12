@@ -95,7 +95,7 @@ app permissions to read secrets stored in the vault.
 
 
 ```bash
-VAULT_NAME=asaikali-demo-vault && \
+VAULT_NAME=REPLACE-WITH-VAULT-NAME && \
 az spring connection create keyvault \
   --service ${ASA_SERVICE_NAME} \
   --resource-group ${ASA_SERVICE_RG} \
@@ -122,8 +122,9 @@ Run the command below to deploy the app.
 az spring app deploy \
   --resource-group ${ASA_SERVICE_RG} \
   --service ${ASA_SERVICE_NAME} \
+  --build-cpu 4 \
   --name ${ASA_APP_NAME} \
-  --artifact-path ./target/PROJECT-TITLE-0.0.1--SNAPSHOT.jar \
+  --artifact-path ./target/REPLACE-WITH-APP-NAME-0.0.1-SNAPSHOT.jar \
   --output table
 ```
 
