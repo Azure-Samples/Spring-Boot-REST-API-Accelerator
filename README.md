@@ -20,7 +20,7 @@ with the Azure Spring Apps service. The readme file seen by the user
 when they generate a project is located in ["app-readme.md"](app-readme.md) Below are
 azure cli commands to manage accelerators with Azure Spring Apps.
 
-## Enable Application Accelerator
+## Enable Application Accelerator 
 The first step is to enable the application accelerator capability
 in Azure Spring Apps Enterprise Tier. You can use the command below
 replace the `ASA_SERVICE_RG` and `ASA_SERVICE_NAME` environment
@@ -35,7 +35,7 @@ az spring application-accelerator create \
   --service ${ASA_SERVICE_NAME}
 ```
 
-## Register the accelerator
+## Register the Accelerator
 The second step is to register the accelerator with Azure Spring Apps
 using the command below.You will need to make modifications to match
 where the Azure Spring Apps instance is deploy, along with the specific
@@ -67,7 +67,7 @@ az spring application-accelerator customized-accelerator list \
   --output table
 ```
 
-## Unregister an accelerator
+## Unregister an Accelerator
 
 ```bash
 ASA_SERVICE_RG=demo && \
