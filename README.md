@@ -10,6 +10,10 @@ simplifies the life developers.
 For local development you will need Java and your favourite IDE. 
 Just import the project into your IDE and you will be able to launch it.
 
+If you are application is using a Postgres there is a folder 
+`infra/local` which contains a docker file to launch a local 
+postgres server for development. 
+
 # Deploying to Azure Spring Apps
 
 ## Prerequisites
@@ -19,9 +23,22 @@ you will need the azure cli installed, along with the azure
 spring apps extension. If the extension is not installed
 you can install it with the command `az extension add --name spring`
 
-Setup of any dependant azure resources can be found in the
-`/azure` folder. If the folder does not exist then you don't 
-need it.
+
+*Create the Key Vault*
+1. cd into the folder `infra/azure/KeyVault/`
+2. Run the `create-key-vault.sh` passing it the name resource group to create the Azure Key Vault in.
+
+*Create Postgres DB (Optional)*
+
+If you are using Postgres as database you can use the steps below to 
+configure the database 
+
+1. cd into the folder `infra/azure/Postgres`
+2. Run the `create-postgres-server.sh` passing it the name of the resource group to create the Postgres database in.
+3. You will be asked to select a password to use to access the database
+
+Once the database is done creating, it is time to add the database
+password to 
 
 ## Set environment variables
 All `az spring` commands require two common parameters. The name of

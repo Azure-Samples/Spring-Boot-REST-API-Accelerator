@@ -94,7 +94,7 @@ engine:
         # include all files except the ones that we might not need
         #
         - include: [ "**/**" ]
-          exclude: [ "infra/**", "**/*.java", "ytt/**", "accelerator.md" ]
+          exclude: [ "infra/**", "**/*.java", "ytt/**", "accelerator.md", "settings-template.sh" ]
 
         #
         # Refactor the package name of the generated java code to
@@ -154,7 +154,7 @@ engine:
 
         #
         # configure local development with Postgres
-        # using docker compase
+        # using docker compose
         #
         - include: [ "infra/local/**" ]
           condition: "#postgresDB == true"
@@ -174,7 +174,7 @@ engine:
                 - text: SERVER-NAME
                   with: "#postgresServerName"
 
-          #
+        #
         # transform the readme to provide custom instructions based on
         # what the user's choices.
         #
