@@ -198,5 +198,7 @@ engine:
           substitutions:
             - text: LOCAL-DB-USAGE
               with:  "''"
+            - text: AZURE-DB-USAGE
+              with: "''"
 
 
