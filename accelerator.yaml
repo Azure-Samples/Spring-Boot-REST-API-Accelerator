@@ -85,7 +85,7 @@ engine:
     # include all files except the ones that we might not need
     #
     - include: [ "**/**" ]
-      exclude: [ "infra/**", "**/*.java", "ytt/**", "app-readme.md", "settings-template.sh" ]
+      exclude: [ "infra/**", "**/*.java", "ytt/**", "app-readme.md", "settings-template.sh", "snippets/**" ]
 
     #
     # Refactor the package name of the generated java code to
@@ -173,10 +173,10 @@ engine:
     # transform the readme to provide custom instructions on
     # how to use the generated project based on user choices.
     #
-    - include: [ "app-readme.md" ]
+    - include: [ "app-readme.md", "snippets/**" ]
       chain:
         - type: RewritePath
-          regex: app-readme(.*)
+          regex: snippets/app-readme(.*)
           rewriteTo: "'README' + #g1"
         - type: ReplaceText
           substitutions:
