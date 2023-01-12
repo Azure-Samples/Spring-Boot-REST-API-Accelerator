@@ -86,6 +86,28 @@ az spring app create \
   --output table
 ```
 
+## Create a Passwordless Connection to KeyVault
+
+In order for the app to authenticate itself to Azure KeyVault 
+using the app's azure managed identity we need to configure
+the access policies in KeyVault to allow this particular
+app permissions to read secrets stored in the vault.
+
+
+```bash
+VAULT_NAME=asaikali-demo-vault && \
+az spring connection create keyvault \
+  --service ${ASA_SERVICE_NAME} \
+  --resource-group ${ASA_SERVICE_RG} \
+  --connection vault \
+  --app ${ASA_APP_NAME} \
+  --client-type springBoot \
+  --vault ${VAULT_NAME} \
+  --system-identity \
+  --target-resource-group ${ASA_SERVICE_RG} 
+```
+
+
 ## Deploy the application code
 
 Azure spring apps can deploy application code from source or from a complied
