@@ -184,6 +184,8 @@ engine:
               with: "#artifactId"
             - text: JAVA-VERSION
               with: "#javaVersion"
+            - text: REPLACE-WITH-APP-NAME
+              with: "#artifactId"
         - type: ReplaceText
           condition: "#postgresDB == true"
           substitutions:

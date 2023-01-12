@@ -36,10 +36,6 @@ spring apps extension. If the extension is not installed
 you can install it with the command `az extension add --name spring`
 
 
-
-
-
-
 ## Set environment variables
 All `az spring` commands require two common parameters. The name of
 the ASA service and the name of the resource group that the ASA
@@ -54,7 +50,7 @@ variables that the rest of the commands in this document will use.
 ```bash
 export ASA_SERVICE_RG=demo 
 export ASA_SERVICE_NAME=demo-asa 
-export ASA_APP_NAME=quotes-demo
+export ASA_APP_NAME=REPLACE-WITH-APP-NAME
 ```
 
 ## List the currently deployed apps
@@ -83,7 +79,8 @@ az spring app create \
   --system-assigned true \
   --cpu 1000m \
   --memory 1Gi \
-  --name ${ASA_APP_NAME} 
+  --name ${ASA_APP_NAME} \
+  --output table
 ```
 
 ## Deploy the application code
@@ -101,7 +98,8 @@ az spring app deploy \
   --resource-group ${ASA_SERVICE_RG} \
   --service ${ASA_SERVICE_NAME} \
   --name ${ASA_APP_NAME} \
-  --artifact-path ./target/Spring-Boot-REST-API-Accelerator-0.0.1-SNAPSHOT.jar
+  --artifact-path ./target/Spring-Boot-REST-API-Accelerator-0.0.1-SNAPSHOT.jar \
+  --output table
 ```
 
 ## Delete the application

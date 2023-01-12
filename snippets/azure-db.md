@@ -1,4 +1,4 @@
-# Azure Database for PostgreSQL
+## Azure Database for PostgreSQL
 
 An ARM template for creating a postgres database and putting
 its password in the Key Vault created in the previous step
