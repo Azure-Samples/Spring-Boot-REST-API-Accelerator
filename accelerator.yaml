@@ -182,6 +182,10 @@ engine:
           substitutions:
             - text: PROJECT-TITLE
               with: "#artifactId"
+            - text: JAVA-VERSION
+              with: "#javaVersion"
+            - text: LOCAL-DB-USAGE
+              with:  "#files.contentsOf('snippets/local-db.md')"
 
 
 

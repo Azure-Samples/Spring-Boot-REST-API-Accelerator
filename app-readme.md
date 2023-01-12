@@ -1,25 +1,16 @@
 # PROJECT-TITLE
 
-An application accelerator that generates Spring Boot based API for the
-Azure Spring Apps Enterprise tier service. This is designed to teach you 
-the concepts of an application accelerator and highlight how accelerators 
-simplifies the life developers.
+This project contains a Spring Boot based rest API designed to
+run on the Azure Spring App Service. You can use this generated 
+project to get started quickly. The generated code has a single
+API that returns a random quote. 
 
+# Local Development Environment
 
-1. Register the accelerator with Azure spring apps by following the instructions in [accelerator.md](accelerator.md)
-2. Visit the accelerator URL in the Azure Spring Apps Instance where the accelerator was register
-3. Select the accelerator, generate a project and follow the instructions in the generated project's readme.md
-
-
-
-# Local Development
-
-For local development you will need Java and your favourite IDE. 
+For local development you will need Java JAVA-VERSION and your favourite IDE. 
 Just import the project into your IDE and you will be able to launch it.
 
-If you are application is using a Postgres there is a folder 
-`infra/local` which contains a docker file to launch a local 
-postgres server for development. 
+LOCAL-DB-USAGE
 
 <!--IsThisReal-->
 # Deploying to Azure Spring Apps

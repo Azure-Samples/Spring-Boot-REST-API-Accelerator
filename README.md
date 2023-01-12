@@ -63,6 +63,11 @@ az spring application-accelerator customized-accelerator list \
   --output table
 ```
 
+## Try out the accelerator
+
+2. Visit the accelerator URL in the Azure Spring Apps instance where the accelerator was registered
+3. Select the accelerator, generate a project and follow the instructions in the generated project's readme.md
+
 ## Unregister an Accelerator
 ```bash
 ASA_SERVICE_RG=demo && \
