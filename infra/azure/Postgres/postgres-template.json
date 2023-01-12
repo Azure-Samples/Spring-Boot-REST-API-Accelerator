@@ -2,6 +2,9 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+     "keyVaultName": {
+      "type": "string"
+    },
     "administratorLogin": {
       "type": "string"
     },
@@ -111,6 +114,14 @@
           "geoRedundantBackup": "Disabled"
         },
         "availabilityZone": "[parameters('availabilityZone')]"
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2022-07-01",
+      "name": "[format('{0}/{1}', parameters('keyVaultName'), parameters('serverName'))]",
+      "properties": {
+        "value": "[parameters('administratorLoginPassword')]"
       }
     }
   ]

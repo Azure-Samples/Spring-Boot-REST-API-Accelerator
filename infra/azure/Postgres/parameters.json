@@ -5,6 +5,9 @@
     "serverName": {
       "value": "SERVER-NAME"
     },
+    "keyVaultName": {
+      "value": "VAULT-NAME"
+    },
     "administratorLogin": {
       "value": "pgadmin"
     },

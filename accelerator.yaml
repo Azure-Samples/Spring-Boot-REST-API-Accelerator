@@ -173,6 +173,10 @@ engine:
               substitutions:
                 - text: SERVER-NAME
                   with: "#postgresServerName"
+            - type: ReplaceText
+              substitutions:
+                - text: VAULT-NAME
+                  with: "#keyVaultName"
 
         #
         # transform the readme to provide custom instructions based on
