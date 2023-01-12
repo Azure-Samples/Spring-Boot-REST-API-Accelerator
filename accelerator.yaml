@@ -178,16 +178,27 @@ engine:
                 - text: VAULT-NAME
                   with: "#keyVaultName"
 
+
         #
         # transform the readme to provide custom instructions based on
         # what the user's choices.
         #
-        - include: [ "README.md" ]
+        - include: [ "accelerator.md" ]
           chain:
-            - type: ReplaceText
-              substitutions:
-                - text: Spring-Boot-REST-API-Accelerator
-                  with: "#artifactId"
+            - type: RewritePath
+              regex: accelerator(.*)
+              rewriteTo: "'README' + #g1"
+
+#        #
+#        # transform the readme to provide custom instructions based on
+#        # what the user's choices.
+#        #
+#        - include: [ "README.md" ]
+#          chain:
+#            - type: ReplaceText
+#              substitutions:
+#                - text: Spring-Boot-REST-API-Accelerator
+#                  with: "#artifactId"
 
 
 
