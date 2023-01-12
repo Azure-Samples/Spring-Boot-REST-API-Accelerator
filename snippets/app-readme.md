@@ -20,8 +20,11 @@ is provided to create the KeyVault instance in a resource group of your
 choice. Use command below.
 
 ```bash
-cd infra/azure/KeyVault
-VAULT_RESOURCE_GROUP=demo ./create-key-vault.sh ${VAULT_RESOURCE_GROUP}
+VAULT_RESOURCE_GROUP=demo && \
+az deployment group create \
+  --template-file infra/azure/KeyVault/key-vault-template.json \
+  --parameters infra/azure/KeyVault/parameters.json \
+  --resource-group ${VAULT_RESOURCE_GROUP}
 ```
 
 AZURE-DB-USAGE
