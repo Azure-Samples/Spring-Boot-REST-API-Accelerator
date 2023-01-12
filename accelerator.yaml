@@ -85,7 +85,7 @@ engine:
     # include all files except the ones that we might not need
     #
     - include: [ "**/**" ]
-      exclude: [ "infra/**", "**/*.java", "ytt/**", "app-readme.md", "settings-template.sh", "/snippets/**" ]
+      exclude: [ "infra/**", "**/*.java", "ytt/**", "app-readme.md", "settings-template.sh" ]
 
     #
     # Refactor the package name of the generated java code to
@@ -188,7 +188,7 @@ engine:
           condition: "#postgresDB == true"
           substitutions:
             - text: LOCAL-DB-USAGE
-              with:  "#files.contentsOf('snippets/local-db.md')"
+              with: "#files.contentsOf('snippets/local-db.md')"
             - text: AZURE-DB-USAGE
               with: "#files.contentsOf('snippets/azure-db.md')"
         - type: ReplaceText
