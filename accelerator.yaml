@@ -85,7 +85,7 @@ engine:
     # include all files except the ones that we might not need
     #
     - include: [ "**/**" ]
-      exclude: [ "infra/**", "**/*.java", "ytt/**", "accelerator.md", "settings-template.sh" ]
+      exclude: [ "infra/**", "**/*.java", "ytt/**", "app-readme.md", "settings-template.sh" ]
 
     #
     # Refactor the package name of the generated java code to
@@ -173,7 +173,7 @@ engine:
     # transform the readme to provide custom instructions on
     # how to use the generated project based on user choices.
     #
-    - include: [ "accelerator.md" ]
+    - include: [ "app-readme.md" ]
       chain:
         - type: RewritePath
           regex: accelerator(.*)
