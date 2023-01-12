@@ -80,125 +80,104 @@ accelerator:
 #
 
 engine:
-  let:
+  merge:
     #
-    # Make a random 6 character suffix that we can add to generated azure
-    # resource names that must be unique
+    # include all files except the ones that we might not need
     #
-#    - name: randomSuffix
-#      expression: 'java.util.UUID.randomUUID().toString().substring(0,6)'
+    - include: [ "**/**" ]
+      exclude: [ "infra/**", "**/*.java", "ytt/**", "accelerator.md", "settings-template.sh" ]
 
-  chain:
-    - merge:
-        #
-        # include all files except the ones that we might not need
-        #
-        - include: [ "**/**" ]
-          exclude: [ "infra/**", "**/*.java", "ytt/**", "accelerator.md", "settings-template.sh" ]
+    #
+    # Refactor the package name of the generated java code to
+    # package name entered by the user using OpenRewrite Engine
+    #
+    - include: [ "**/*.java" ]
+      chain:
+        - type: OpenRewriteRecipe
+          recipe: org.openrewrite.java.ChangePackage
+          options:
+            oldPackageName: "'com.example'"
+            newPackageName: "#packageName"
 
-        #
-        # Refactor the package name of the generated java code to
-        # package name entered by the user using OpenRewrite Engine
-        #
-        - include: [ "**/*.java" ]
-          chain:
-            - type: OpenRewriteRecipe
-              recipe: org.openrewrite.java.ChangePackage
-              options:
-                oldPackageName: "'com.example'"
-                newPackageName: "#packageName"
+    #
+    # Generate the spring boot application.yaml using carvel YTT tool
+    #
+    - include: [ "src/main/resources/application.yaml", "ytt/add-vault.yaml" ]
+      chain:
+        - type: YTT
 
-        #
-        # Generate the spring boot application.yaml using carvel YTT tool
-        #
-        - include: [ "src/main/resources/application.yaml", "ytt/add-vault.yaml" ]
-          chain:
-            - type: YTT
+    #
+    # transform the pom.xml based on the input values
+    #  - set the artifact id
+    #  - set the java version
+    #  - configure maven dependencies
+    #
+    - include: [ "pom.xml" ]
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text: Spring-Boot-REST-API-Accelerator
+              with: "#artifactId"
+        - type: ReplaceText
+          condition: "#javaVersion == '17'"
+          substitutions:
+            - text: <java.version>11</java.version>
+              with: "'<java.version>17</java.version>'"
+        - type: OpenRewriteRecipe
+          recipe: org.openrewrite.maven.RemoveDependency
+          condition: "#postgresDB == false"
+          options:
+            groupId: "'org.postgresql'"
+            artifactId: "'postgresql'"
+            scope: "'runtime'"
 
-        #
-        # transform the pom.xml based on the input values
-        #  - set the artifact id
-        #  - set the java version
-        #  - configure maven dependencies
-        #
-        - include: [ "pom.xml" ]
-          chain:
-            - type: ReplaceText
-              substitutions:
-                - text: Spring-Boot-REST-API-Accelerator
-                  with: "#artifactId"
-            - type: ReplaceText
-              condition: "#javaVersion == '17'"
-              substitutions:
-                - text: <java.version>11</java.version>
-                  with: "'<java.version>17</java.version>'"
-            - type: OpenRewriteRecipe
-              recipe: org.openrewrite.maven.RemoveDependency
-              condition: "#postgresDB == false"
-              options:
-                groupId: "'org.postgresql'"
-                artifactId: "'postgresql'"
-                scope: "'runtime'"
+    #
+    # Configure KeyVault ARM template
+    #
+    - include: [ "infra/azure/KeyVault/**" ]
+      exclude: [ "infra/azure/KeyVault/parameters.json" ]
+    - include: [ "infra/azure/KeyVault/parameters.json" ]
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text: REPLACE-WITH-VAULT-NAME
+              with: "#keyVaultName"
 
-        #
-        # Configure KeyVault ARM template
-        #
-        - include: [ "infra/azure/KeyVault/**" ]
-          exclude: [ "infra/azure/KeyVault/parameters.json" ]
-        - include: [ "infra/azure/KeyVault/parameters.json" ]
-          chain:
-            - type: ReplaceText
-              substitutions:
-                - text: REPLACE-WITH-VAULT-NAME
-                  with: "#keyVaultName"
+    #
+    # configure local development with Postgres
+    # using docker compose
+    #
+    - include: [ "infra/local/**" ]
+      condition: "#postgresDB == true"
 
-        #
-        # configure local development with Postgres
-        # using docker compose
-        #
-        - include: [ "infra/local/**" ]
-          condition: "#postgresDB == true"
+    #
+    # configure ARM template for Postgres development on Azure
+    #
+    - include: ["infra/azure/Postgres/**"]
+      exclude: [ "infra/azure/Postgres/parameters.json"]
+      condition: "#postgresDB == true"
 
-        #
-        # configure ARM template for Postgres development on Azure
-        #
-        - include: ["infra/azure/Postgres/**"]
-          exclude: [ "infra/azure/Postgres/parameters.json"]
-          condition: "#postgresDB == true"
+    - include: [ "infra/azure/Postgres/parameters.json" ]
+      condition: "#postgresDB == true"
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text: SERVER-NAME
+              with: "#postgresServerName"
+        - type: ReplaceText
+          substitutions:
+            - text: VAULT-NAME
+              with: "#keyVaultName"
 
-        - include: [ "infra/azure/Postgres/parameters.json" ]
-          condition: "#postgresDB == true"
-          chain:
-            - type: ReplaceText
-              substitutions:
-                - text: SERVER-NAME
-                  with: "#postgresServerName"
-            - type: ReplaceText
-              substitutions:
-                - text: VAULT-NAME
-                  with: "#keyVaultName"
-
-
-        #
-        # transform the readme to provide custom instructions based on
-        # what the user's choices.
-        #
-        - include: [ "accelerator.md" ]
-          chain:
-            - type: RewritePath
-              regex: accelerator(.*)
-              rewriteTo: "'README' + #g1"
-
-#        #
-#        # transform the readme to provide custom instructions based on
-#        # what the user's choices.
-#        #
-#        - include: [ "README.md" ]
-#          chain:
-#            - type: ReplaceText
-#              substitutions:
-#                - text: Spring-Boot-REST-API-Accelerator
-#                  with: "#artifactId"
+    #
+    # transform the readme to provide custom instructions on
+    # how to use the generated project based on user choices.
+    #
+    - include: [ "accelerator.md" ]
+      chain:
+        - type: RewritePath
+          regex: accelerator(.*)
+          rewriteTo: "'README' + #g1"
 
 
 
