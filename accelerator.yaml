@@ -189,6 +189,8 @@ engine:
           substitutions:
             - text: LOCAL-DB-USAGE
               with:  "#files.contentsOf('snippets/local-db.md')"
+            - text: AZURE-DB-USAGE
+              with: "#files.contentsOf('snippets/azure-db.md')"
         - type: ReplaceText
           condition: "#postgresDB == false"
           substitutions:

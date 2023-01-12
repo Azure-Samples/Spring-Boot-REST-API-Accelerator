@@ -5,15 +5,13 @@ docker compose file launch two containers.
 2. gpAdmin accessible on [http://localhost:15433](http://localhost:15433)**
 
 The `docker-compose.yaml` is located in `infra/local` directory.
-
-1. **run local database**
+**run local database**
 ```bash
 cd infra/local
 docker compose up 
 ```
-2. **Stop local database**
+**Stop local database**
 ```bash
 cd infra/local
 docker compose down 
 ```
-3. **Access pgAdmin on [http://localhost:15433](http://localhost:15433)**

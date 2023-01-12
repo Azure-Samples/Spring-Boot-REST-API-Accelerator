@@ -12,6 +12,8 @@ be able to launch it.
 LOCAL-DB-USAGE
 
 # Provision Azure Development Resources
+
+## KeyVault
 An ARM template for creating an Azure KeyVault is located in 
 `infra/azure/KeyVault` folder. A handy shell script `create-key-vault.sh`
 is provided to create the KeyVault instance in a resource group of your 
@@ -22,6 +24,7 @@ cd infra/azure/KeyVault
 VAULT_RESOURCE_GROUP=demo ./create-key-vault.sh ${VAULT_RESOURCE_GROUP}
 ```
 
+AZURE-DB-USAGE
 
 # Deploying to Azure Spring Apps
 
@@ -35,17 +38,7 @@ you can install it with the command `az extension add --name spring`
 
 
 
-*Create Postgres DB (Optional)*
 
-If you are using Postgres as database you can use the steps below to 
-configure the database 
-
-1. cd into the folder `infra/azure/Postgres`
-2. Run the `create-postgres-server.sh` passing it the name of the resource group to create the Postgres database in.
-3. You will be asked to select a password to use to access the database
-
-Once the database is done creating, it is time to add the database
-password to 
 
 ## Set environment variables
 All `az spring` commands require two common parameters. The name of
