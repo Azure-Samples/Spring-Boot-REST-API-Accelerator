@@ -134,7 +134,7 @@ Run the command below to stream the app logs
 az spring app logs \
   --resource-group ${ASA_SERVICE_RG} \
   --service ${ASA_SERVICE_NAME} \
-  --follow \
+  -f \
   --name ${ASA_APP_NAME} 
 ```
 
