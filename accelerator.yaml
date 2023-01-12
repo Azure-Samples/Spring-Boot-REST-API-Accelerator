@@ -130,6 +130,13 @@ engine:
             groupId: "'org.postgresql'"
             artifactId: "'postgresql'"
             scope: "'runtime'"
+        - type: OpenRewriteRecipe
+          recipe: org.openrewrite.maven.ChangeDependencyScope
+          condition: "#postgresDB == false"
+          options:
+            groupId: "'com.h2database'"
+            artifactId: "'h2'"
+            newScope: "'runtime'"
 
     #
     # Configure KeyVault ARM template
