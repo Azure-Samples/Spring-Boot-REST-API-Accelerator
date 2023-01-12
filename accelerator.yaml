@@ -184,8 +184,15 @@ engine:
               with: "#artifactId"
             - text: JAVA-VERSION
               with: "#javaVersion"
+        - type: ReplaceText
+          condition: "#postgresDB == true"
+          substitutions:
             - text: LOCAL-DB-USAGE
               with:  "#files.contentsOf('snippets/local-db.md')"
-
+        - type: ReplaceText
+          condition: "#postgresDB == false"
+          substitutions:
+            - text: LOCAL-DB-USAGE
+              with:  "''"
 
 

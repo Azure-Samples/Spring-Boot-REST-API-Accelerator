@@ -1,18 +1,28 @@
 # PROJECT-TITLE
-
 This project contains a Spring Boot based rest API designed to
 run on the Azure Spring App Service. You can use this generated 
 project to get started quickly. The generated code has a single
 API that returns a random quote. 
 
 # Local Development Environment
-
-For local development you will need Java JAVA-VERSION and your favourite IDE. 
-Just import the project into your IDE and you will be able to launch it.
+For local development you will need Java JAVA-VERSION and your 
+favourite IDE. Just import the project into your IDE and you will
+be able to launch it.
 
 LOCAL-DB-USAGE
 
-<!--IsThisReal-->
+# Provision Azure Development Resources
+An ARM template for creating an Azure KeyVault is located in 
+`infra/azure/KeyVault` folder. A handy shell script `create-key-vault.sh`
+is provided to create the KeyVault instance in a resource group of your 
+choice. Use command below.
+
+```bash
+cd infra/azure/KeyVault
+VAULT_RESOURCE_GROUP=demo ./create-key-vault.sh ${VAULT_RESOURCE_GROUP}
+```
+
+
 # Deploying to Azure Spring Apps
 
 ## Prerequisites
@@ -23,9 +33,7 @@ spring apps extension. If the extension is not installed
 you can install it with the command `az extension add --name spring`
 
 
-*Create the Key Vault*
-1. cd into the folder `infra/azure/KeyVault/`
-2. Run the `create-key-vault.sh` passing it the name resource group to create the Azure Key Vault in.
+
 
 *Create Postgres DB (Optional)*
 
