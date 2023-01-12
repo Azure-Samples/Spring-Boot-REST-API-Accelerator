@@ -1,11 +1,9 @@
 # Developing the accelerator
-
 An simple application accelerator for Azure Spring Apps Enterprise Tier.
 This is designed to teach you the concepts of an application accelerator and
 highlight how accelerators simplifies the life developers.
 
 ## Features
-
 Asks the user to choose: 
 
 * version of Java 11 or 17
@@ -14,7 +12,6 @@ Asks the user to choose:
 * Name of postgres DB to create if the user asks for a database
 
 # Getting Started
-
 The rest of this ready explains how to register this accelerators 
 with the Azure Spring Apps service. The readme file seen by the user
 when they generate a project is located in ["app-readme.md"](app-readme.md) Below are
@@ -55,7 +52,6 @@ az spring application-accelerator customized-accelerator create \
 ```
 
 ## List Deployed Accelerators
-
 The command displays a table with all the metadata details of an accelerator.
 
 ```bash
@@ -68,7 +64,6 @@ az spring application-accelerator customized-accelerator list \
 ```
 
 ## Unregister an Accelerator
-
 ```bash
 ASA_SERVICE_RG=demo && \
 ASA_SERVICE_NAME=demo-asa && \
