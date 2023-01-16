@@ -180,7 +180,7 @@ engine:
     # transform the readme to provide custom instructions on
     # how to use the generated project based on user choices.
     #
-    - include: [ "app-readme.md", "snippets/**" ]
+    - include: [ "app-readme.md", "snippets/app-readme.*" ]
       chain:
         - type: RewritePath
           regex: snippets/app-readme(.*)
