@@ -1,5 +1,5 @@
 # Developing the accelerator
-An simple application accelerator for Azure Spring Apps Enterprise Tier.
+A simple application accelerator for Azure Spring Apps Enterprise Tier.
 This is designed to teach you the concepts of an application accelerator and
 highlight how accelerators simplifies the life developers.
 
@@ -12,7 +12,8 @@ Asks the user to choose:
 * Name of postgres DB to create if the user asks for a database
 
 # Getting Started
-The rest of this ready explains how to register this accelerators 
+The rest of this readme explains how to register this accelerators 
+
 with the Azure Spring Apps service. The readme file seen by the user
 when they generate a project is located in ["app-readme.md"](snippets/app-readme.md) Below are
 azure cli commands to manage accelerators with Azure Spring Apps.
@@ -35,7 +36,7 @@ az spring application-accelerator create \
 ## Register the Accelerator
 The second step is to register the accelerator with Azure Spring Apps
 using the command below.You will need to make modifications to match
-where the Azure Spring Apps instance is deploy, along with the specific
+where the Azure Spring Apps instance is deployed, along with the specific
 details of accelerator such as name, git repo it is located in, and
 display name.
 ```bash

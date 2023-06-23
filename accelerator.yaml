@@ -18,14 +18,14 @@ accelerator:
     - name: javaVersion
       dataType: string
       required: true
-      defaultValue: "11"
+      defaultValue: "17"
       label: Which Java version do you want to use?
       description: Java version used by the generated project
       inputType: select
       choices:
         - text: 11
           value: "11"
-        - text: 17 (Recommend)
+        - text: 17 (Recommended)
           value: "17"
 
     #
@@ -180,7 +180,7 @@ engine:
     # transform the readme to provide custom instructions on
     # how to use the generated project based on user choices.
     #
-    - include: [ "app-readme.md", "snippets/**" ]
+    - include: [ "app-readme.md", "snippets/app-readme.*" ]
       chain:
         - type: RewritePath
           regex: snippets/app-readme(.*)
